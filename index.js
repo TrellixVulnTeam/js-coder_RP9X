@@ -1,47 +1,48 @@
 //Constructor
 class Burger {
-  constructor(title, medallones) {
-    this.title = title;
-    this.medallones = medallones;
+  constructor(rtaTitle, rtaMedallones) {
+    this.hamburguesa = rtaTitle;
+    this.medallones = rtaMedallones;
     this.salsa = "Sin salsa";
     this.extraCheddar = "Sin Extra Cheddar";
     this.extraBacon = "Sin Extra Bacon";
+    this.pepinos = "Sin pepinos";
     this.precio = 0;
   }
-  adereso(params) {
-    if (params == "SI") {
+  adereso(rtaAderezo) {
+    if (rtaAderezo == "SI") {
       this.salsa = "Con salsa";
     } else {
       this.salsa = "Sin salsa";
     }
   }
-  cheddar(params) {
-    if (params == "SI") {
+  cheddar(rtaExtraCheddar) {
+    if (rtaExtraCheddar == "SI") {
       this.extraCheddar = "Con Extra Cheddar";
       this.precio += 100;
     } else {
       this.extraCheddar = "Sin Extra Cheddar";
     }
   }
-  precioMedallones(params) {
-    if (params === 1) {
+  precioMedallones(rtaMedallones) {
+    if (rtaMedallones === 1) {
       this.precio += 700;
-    } else if (params === 2) {
+    } else if (rtaMedallones === 2) {
       this.precio += 800;
-    } else if (params === 3) {
+    } else if (rtaMedallones === 3) {
       this.precio += 900;
     }
   }
-  pepinos(params) {
-    if (params == "SI") {
-      this.extraPepinos = "Con Pepinos";
+  pepino(rtaPepinos) {
+    if (rtaPepinos == "SI") {
+      this.pepinos = "Con Pepinos";
       this.precio += 50;
     } else {
-      this.extraPepinos = "Sin Pepinos";
+      this.pepinos = "Sin Pepinos";
     }
   }
-  bacon(params) {
-    if (params == "SI") {
+  bacon(rtaExtraBacon) {
+    if (rtaExtraBacon == "SI") {
       this.extraBacon = "Con Extra Bacon";
       this.precio += 100;
     } else {
@@ -52,24 +53,31 @@ class Burger {
 
 //Funcion para agrregar los objetos al array
 
-function pedidoBurger(title, medallones, salsa, cheddar, pepinos, bacon) {
-  let pedido = new Burger(title, medallones);
-  pedido.precioMedallones(medallones);
-  pedido.adereso(salsa);
-  pedido.cheddar(cheddar);
-  pedido.pepinos(pepinos);
-  pedido.bacon(bacon);
+function pedidoBurger(
+  rtaTitle,
+  rtaMedallones,
+  rtaAderezo,
+  rtaExtraCheddar,
+  rtaPepinos,
+  rtaExtraBacon
+) {
+  let pedido = new Burger(rtaTitle, rtaMedallones);
+  pedido.precioMedallones(rtaMedallones);
+  pedido.adereso(rtaAderezo);
+  pedido.cheddar(rtaExtraCheddar);
+  pedido.pepino(rtaPepinos);
+  pedido.bacon(rtaExtraBacon);
   carrito.push(pedido);
 }
 
 //Funcion de los prompt
 
 function burgerInput() {
-  inputMedallones = Number(prompt("Ingrese la cantidad de medallones"));
-  inputSalsa = prompt(
+  rtaMedallones = Number(prompt("Ingrese la cantidad de medallones"));
+  rtaAderezo = prompt(
     "Ingrese (Si) en caso de querer salsa\nIngrese (No) en caso de no querer salsa"
   ).toUpperCase();
-  inputCheddar = prompt(
+  rtaExtraCheddar = prompt(
     "Ingrese (Si) en caso de querer EXTRA CHEDDAR\nIngrese (No) En caso de no querer EXTRA CHEDDAR"
   ).toUpperCase();
 }
@@ -78,12 +86,12 @@ function burgerInput() {
 const carrito = [];
 
 // Variables
-let inputMedallones;
-let inputSalsa;
-let inputCheddar;
-let inputPepinos = "NO";
-let inputBacon = "NO";
-let inputTitle;
+let rtaTitle;
+let rtaMedallones;
+let rtaAderezo;
+let rtaExtraCheddar;
+let rtaPepinos;
+let rtaExtraBacon;
 
 //While para elegir hamburguesa y sus agregados
 while (true) {
@@ -93,48 +101,48 @@ while (true) {
     )
   );
   if (pedido == 1) {
-    inputTitle = "CheeseBurger";
-    inputBacon = "NO";
+    rtaTitle = "CheeseBurger";
+    rtaExtraBacon = "NO";
     burgerInput();
-    inputPepinos = prompt(
+    rtaPepinos = prompt(
       "Ingrese (Si) en caso de querer PEPINOS\nIngrese (No) en caso de no querer PEPINOS"
     ).toUpperCase();
     pedidoBurger(
-      inputTitle,
-      inputMedallones,
-      inputSalsa,
-      inputCheddar,
-      inputPepinos,
-      inputBacon
+      rtaTitle,
+      rtaMedallones,
+      rtaAderezo,
+      rtaExtraCheddar,
+      rtaPepinos,
+      rtaExtraBacon
     );
   } else if (pedido == 2) {
-    inputTitle = "BaconCheeseBurger";
-    inputPepinos = "NO";
+    rtaTitle = "BaconCheeseBurger";
+    rtaPepinos = "NO";
     burgerInput();
-    inputBacon = prompt(
+    rtaExtraBacon = prompt(
       "Ingrese (Si) en caso de querer EXTRA BACON\nIngrese (No) en caso de no querer EXTRA BACON"
     ).toUpperCase();
     pedidoBurger(
-      inputTitle,
-      inputMedallones,
-      inputSalsa,
-      inputCheddar,
-      inputPepinos,
-      inputBacon
+      rtaTitle,
+      rtaMedallones,
+      rtaAderezo,
+      rtaExtraCheddar,
+      rtaPepinos,
+      rtaExtraBacon
     );
   } else {
     break;
   }
 }
 
-//Recorre los elementos del array y muestra la informacion en el documento
+//Recorre los elementos del array y muestra los prodoctus seleccionados en el documento
 carrito.forEach((elemento) => {
   document.write(
-    `Nombre: ${elemento.title} </br> Precio: $${elemento.precio}</br><br>`
+    `Nombre: ${elemento.hamburguesa} </br> Precio: $${elemento.precio}</br><br>`
   );
   console.log(elemento);
 });
-
+//Recorre los elementos del array y calcula el valor total de la compra
 const valorTotal = carrito.reduce(
   (acumulador, elemento) => acumulador + elemento.precio,
   0
