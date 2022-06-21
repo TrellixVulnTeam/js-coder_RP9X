@@ -135,16 +135,31 @@ while (true) {
   }
 }
 
-//Recorre los elementos del array y muestra los prodoctus seleccionados en el documento
-carrito.forEach((elemento) => {
-  document.write(
-    `Nombre: ${elemento.hamburguesa} </br> Precio: $${elemento.precio}</br><br>`
-  );
-  console.log(elemento);
-});
+//Recorre los elementos del array y muestra los productos seleccionados en el documento
+let containerBurgerElegidas = document.getElementById("burger-elegidas");
+let burgerCarrito = document.createElement("div");
+burgerCarrito.className = "eliminar-burger";
+if (carrito.length === 0) {
+  burgerCarrito.innerHTML = `<p>Tu carrito esta vacio</p>`;
+  containerBurgerElegidas.append(burgerCarrito);
+} else {
+  for (const elemento of carrito) {
+    burgerCarrito = document.createElement("div");
+    burgerCarrito.className = "eliminar-burger";
+    burgerCarrito.innerHTML = `<p class="valortotal">
+                               ${elemento.hamburguesa}: ${elemento.salsa} - ${elemento.extraCheddar} - ${elemento.extraBacon} - ${elemento.pepinos}. Precio $${elemento.precio}  </p>
+                               <button>X</button>`;
+    containerBurgerElegidas.append(burgerCarrito);
+  }
+}
+
 //Recorre los elementos del array y calcula el valor total de la compra
+// Muestro el valor total de la compra
+let containerValorFinal = document.getElementById("valor-final");
 const valorTotal = carrito.reduce(
   (acumulador, elemento) => acumulador + elemento.precio,
   0
 );
-document.write(`El valor total de tu compra es: $${valorTotal}`);
+let valorFinal = document.createElement("p");
+valorFinal.innerText = "VALOR TOTAL $" + valorTotal;
+containerValorFinal.append(valorFinal);
