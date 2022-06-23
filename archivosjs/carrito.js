@@ -169,3 +169,19 @@ const valorTotal = carrito.reduce(
 let valorFinal = document.createElement("p");
 valorFinal.innerText = "VALOR TOTAL $" + valorTotal;
 containerValorFinal.append(valorFinal);
+
+let obtenerPedido = document.getElementById("obtener-pedido");
+let enviar = document.getElementById("envio");
+let direccion = document.createElement("div");
+enviar.onclick = () => {
+  direccion.setAttribute("id", "direccion");
+  direccion.className = "container-label-input";
+  direccion.innerHTML = `<label for="enviar">Direccion</label>
+                         <input type="text" id="enviar"  name="direccion" required>`;
+  obtenerPedido.append(direccion);
+};
+
+let retirar = document.getElementById("retiro");
+retirar.onclick = () => {
+  direccion.remove();
+};
