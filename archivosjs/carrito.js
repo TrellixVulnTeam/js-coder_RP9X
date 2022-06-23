@@ -1,8 +1,9 @@
 //Constructor
 class Burger {
-  constructor(rtaTitle, rtaMedallones) {
+  constructor(rtaTitle, rtaMedallones, id) {
     this.hamburguesa = rtaTitle;
     this.medallones = rtaMedallones;
+    this.id = id;
     this.salsa = "Sin salsa";
     this.extraCheddar = "Sin Extra Cheddar";
     this.extraBacon = "Sin Extra Bacon";
@@ -56,12 +57,13 @@ class Burger {
 function pedidoBurger(
   rtaTitle,
   rtaMedallones,
+  id,
   rtaAderezo,
   rtaExtraCheddar,
   rtaPepinos,
   rtaExtraBacon
 ) {
-  let pedido = new Burger(rtaTitle, rtaMedallones);
+  let pedido = new Burger(rtaTitle, rtaMedallones, id);
   pedido.precioMedallones(rtaMedallones);
   pedido.adereso(rtaAderezo);
   pedido.cheddar(rtaExtraCheddar);
@@ -92,9 +94,11 @@ let rtaAderezo;
 let rtaExtraCheddar;
 let rtaPepinos;
 let rtaExtraBacon;
+let id = 0;
 
 //While para elegir hamburguesa y sus agregados
 while (true) {
+  id++;
   let pedido = Number(
     prompt(
       "Selecciona tu hamburguesa\n Ingresa 1: Para seleccionar CheeseBurger\n Ingresa 2: Para seleccionar BaconCheeseBurger\n Ingresa -1: Para salir"
@@ -110,6 +114,7 @@ while (true) {
     pedidoBurger(
       rtaTitle,
       rtaMedallones,
+      id,
       rtaAderezo,
       rtaExtraCheddar,
       rtaPepinos,
@@ -125,6 +130,7 @@ while (true) {
     pedidoBurger(
       rtaTitle,
       rtaMedallones,
+      id,
       rtaAderezo,
       rtaExtraCheddar,
       rtaPepinos,
@@ -148,7 +154,7 @@ if (carrito.length === 0) {
     burgerCarrito.className = "eliminar-burger";
     burgerCarrito.innerHTML = `<p class="valortotal">
                                ${elemento.hamburguesa}: ${elemento.salsa} - ${elemento.extraCheddar} - ${elemento.extraBacon} - ${elemento.pepinos}. Precio $${elemento.precio}  </p>
-                               <button>X</button>`;
+                               <button id="delete">X</button>`;
     containerBurgerElegidas.append(burgerCarrito);
   }
 }

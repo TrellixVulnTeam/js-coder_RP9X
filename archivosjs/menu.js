@@ -60,7 +60,7 @@ burgerGeneradas.forEach((elemento) => {
                     ${elemento.nombre} </h3>
                     <p class="card-text">${elemento.contenido}</p>
                     <p class="card-text">Desde $${elemento.precio} </p>
-                    <a href="#" class="btn btn-outline-dark w-100">Ver opciones</a>
+                    <a href="#" id="boton-ver-mas" class="btn btn-outline-dark w-100">Ver opciones</a>
                     `;
   contenedorCards.append(card);
 });
