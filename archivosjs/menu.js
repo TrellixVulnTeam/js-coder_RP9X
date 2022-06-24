@@ -1,9 +1,10 @@
 class GenerarBurger {
-  constructor(nombre, contenido, precio, url) {
+  constructor(nombre, contenido, precio, url, id) {
     this.nombre = nombre;
     this.contenido = contenido;
     this.precio = precio;
     this.url = url;
+    this.id = id;
   }
 }
 
@@ -14,7 +15,8 @@ burgerGeneradas.push(
     "CHEESEBURGER",
     "Medallon de carne de 120grs, cheddar y salsa thousand island. Incluye papas.",
     800,
-    "./imagenes/cheese.png"
+    "./imagenes/cheese.png",
+    1
   )
 );
 burgerGeneradas.push(
@@ -22,7 +24,8 @@ burgerGeneradas.push(
     "BACON CHEESEBURGER",
     "Medallon de carne de 120grs, cheddar, panceta ahumada y salsa thousand island. Incluye papas.",
     800,
-    "./imagenes/bacon-menu.png"
+    "./imagenes/bacon-menu.png",
+    2
   )
 );
 burgerGeneradas.push(
@@ -30,7 +33,8 @@ burgerGeneradas.push(
     "ROYALE",
     "Medallon de carne de 120grs, cheddar, cebolla brunoise y salsa 1/4 de libra. Incluye papas.",
     800,
-    "./imagenes/royale.png"
+    "./imagenes/royale.png",
+    3
   )
 );
 burgerGeneradas.push(
@@ -38,7 +42,8 @@ burgerGeneradas.push(
     "BIG MC",
     "Medallon de carne de 120grs, cheddar, lechuga, cebolla picada, pepinos y salsa big mc. Incluye papas.",
     800,
-    "./imagenes/bg mc.png"
+    "./imagenes/bg mc.png",
+    4
   )
 );
 burgerGeneradas.push(
@@ -46,7 +51,8 @@ burgerGeneradas.push(
     "FRIED ONION",
     "Medallon de carne de 100grs smasheado junto a la cebolla. Incluye papas.",
     800,
-    "./imagenes/onion .png"
+    "./imagenes/onion .png",
+    5
   )
 );
 
@@ -60,7 +66,37 @@ burgerGeneradas.forEach((elemento) => {
                     ${elemento.nombre} </h3>
                     <p class="card-text">${elemento.contenido}</p>
                     <p class="card-text">Desde $${elemento.precio} </p>
-                    <a href="#" id="boton-ver-mas" class="btn btn-outline-dark w-100">Ver opciones</a>
+                    <button class="btn btn-outline-dark w-100" onclick="comprar(${elemento.id})">Comprar</button>
                     `;
   contenedorCards.append(card);
 });
+
+let carrito = [];
+let cantidadCarrito = document.getElementById("numeroCarrito");
+
+const comprar = (id) => {
+  const burger = burgerGeneradas.find((el) => el.id === id);
+  carrito.push(burger);
+  cantidadCarrito.innerHTML = carrito.length;
+  agregarCarrito(carrito.length - 1);
+};
+
+let carritoDom = document.getElementById("carrito");
+
+const agregarCarrito = (longitud) => {
+  let div = document.createElement("div");
+  div.id = `carrito-${carrito[longitud].id}`;
+  div.innerHTML = `
+  <p class="valortotal">${carrito[longitud].nombre}
+  ${carrito[longitud].precio}</p>
+  <button onclick="eliminar(${carrito[longitud].id})">Eliminar</button>
+  `;
+  carritoDom.append(div);
+};
+
+const eliminar = (idEliminar) => {
+  const eliminar = document.getElementById(`carrito-${idEliminar}`);
+  eliminar.remove();
+  carrito = carrito.filter((el) => el.id !== idEliminar);
+  cantidadCarrito.innerHTML = carrito.length;
+};
