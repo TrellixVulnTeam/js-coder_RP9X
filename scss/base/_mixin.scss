@@ -1,0 +1,10 @@
+@mixin flexing ($display, $jc) {
+    display:$display;
+    justify-content: $jc;
+}
+
+@mixin titulos-subtitulos ($tamaño,$fuente,$relleno){
+    font-size:$tamaño ;
+    font-family: $fuente;
+    font-weight: $relleno;
+}

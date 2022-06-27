@@ -1,0 +1,87 @@
+ @import "../base/variables";
+ @import "../base/mixin";
+ 
+ 
+  
+  
+  
+  .section-primera {
+    @include flexing(flex,center);
+    flex-direction: column;
+    align-items: center;
+    margin-top: $margen-entre-section;
+
+    .titulo-section-primera {
+      @include titulos-subtitulos(1.2rem,("Neutra-Bold", sans-serif),800); 
+        margin-bottom: 10px;
+      @media screen and (max-width:468px) {
+        font-size: 15px;
+      }
+      @media screen and (max-width:300px) {
+        font-size: 12px;      
+      } 
+      }
+      .parrafos {
+        font-family: "Times New Roman", Times, serif;
+        @media screen and (max-width:468px) {
+          font-size: 10px;
+      }
+      @media screen and (max-width:300px) {
+          font-size: 8px;
+          
+      }
+      }
+      #direccion {
+        margin-bottom: 20px;
+      }
+      .mapa {
+        width: 80%;
+        height: 20em;
+        margin-bottom: $margen-entre-section;
+      }
+  }
+
+
+.section-segunda {
+    padding: 4em;
+    background-color: rgb(233, 233, 233);
+    @include flexing(flex,center);
+    align-items: center;
+    flex-direction: column;
+    .titulos-section-segunda {
+      margin-bottom: 7px;
+      margin-top: 10px;
+      @include titulos-subtitulos(0.8rem,("Neutra-Bold", sans-serif),700); 
+      @media screen and (max-width:468px) {
+        font-size: 12px;
+    }
+    @media screen and (max-width:300px) {
+        font-size: 10px;
+        
+    }
+    }
+    .parrafos {
+      font-family: "Times New Roman", Times, serif;
+      @media screen and (max-width:468px) {
+      font-size: 10px;
+    }
+    @media screen and (max-width:300px) {
+        font-size: 8px;
+        
+    }
+    }
+    #titulo-largo{
+      @media screen and (max-width:468px) {
+        font-size: 10px;
+    }
+    @media screen and (max-width:320px) {
+        font-size: 7px;
+        
+    }
+    }
+  }
+  
+  
+  
+  
+  

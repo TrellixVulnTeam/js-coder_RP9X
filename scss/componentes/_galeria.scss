@@ -1,0 +1,46 @@
+@import "../base/variables";
+@import "../base/mixin";
+
+
+.container-titulo-galeria{
+    @include flexing(flex,center);
+    margin-top: $margen-entre-section;
+    margin-bottom:$margen-entre-section;
+
+    .titulos-secciones-galeria {
+        width: 60%;
+        text-align: center;
+        @include titulos-subtitulos(2rem,("Neutra-Bold", sans-serif),800);     
+        opacity: 0.8;
+        padding-bottom: 2em;
+        border-bottom: 2px solid black;
+        
+        @media screen and (max-width:468px) {
+            font-size: 20px;
+        }
+        @media screen and (max-width:320px) {
+            font-size: 15px;
+            
+        }
+      }
+}
+
+
+
+
+  
+
+.container-video{
+    @include flexing(flex,center);
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: $margen-entre-section;
+
+    video{
+        height: 25em;
+        padding:2px;
+      }
+  }
+
+  
+  

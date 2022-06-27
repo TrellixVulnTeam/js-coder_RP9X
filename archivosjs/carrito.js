@@ -1,4 +1,4 @@
-/*//Constructor
+//Constructor
 class Burger {
   constructor(rtaTitle, rtaMedallones, id) {
     this.hamburguesa = rtaTitle;
@@ -169,7 +169,7 @@ const valorTotal = carrito.reduce(
 let valorFinal = document.createElement("p");
 valorFinal.innerText = "VALOR TOTAL $" + valorTotal;
 containerValorFinal.append(valorFinal);
-*/
+
 // Agrego input direccion en caso de tener que enviar el pedido
 let obtenerPedido = document.getElementById("obtener-pedido");
 let enviar = document.getElementById("envio");
