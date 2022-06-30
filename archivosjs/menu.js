@@ -1,5 +1,4 @@
 // Constructor de burger que hay en el menu
-
 class GenerarBurger {
   constructor(
     nombre,
@@ -97,9 +96,11 @@ burgerGeneradas.forEach((elemento) => {
 
 // Creo las variables de precios
 // Creo las variables que van a recibir las respuestas del usuario
+let idCompra;
+idCompra = localStorage.getItem("idCompra") || 0;
+console.log(idCompra);
 let pedido;
 let precio = 0;
-let idCompra = 0;
 let rtaTitle;
 let rtaMedallones;
 let rtaAderezo;
@@ -109,6 +110,9 @@ let rtaExtraBacon;
 const PrecioExtraCheddar = 100;
 const PrecioExtraBacon = 100;
 const PrecioPepinos = 50;
+//Muestro en el DOM la cantidad de productos que hay en el carrito
+let cantidadCarrito = document.getElementById("cantidad-carrito");
+cantidadCarrito.innerText = `${idCompra}`;
 
 //Muestro en el DOM las opciones de la burger que quiere ver el usuario
 const ver = (id) => {
@@ -471,9 +475,7 @@ const ver = (id) => {
         precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
       }
     };
-  }
-
-  if (id === 1) {
+  } else if (id === 1) {
     selection.onchange = () => {
       precio = 0;
       if (cheddar.checked) {
@@ -512,9 +514,7 @@ const ver = (id) => {
         precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
       }
     };
-  }
-
-  if (id > 1 || id < 5) {
+  } else if (id > 1 || id < 5) {
     selection.onchange = () => {
       precio = 0;
       if (cheddar.checked) {
@@ -572,6 +572,10 @@ const ver = (id) => {
     let miFormulario = e.target;
     e.preventDefault();
     idCompra++;
+    localStorage.setItem("idCompra", idCompra);
+    //Muestro en el DOM la cantidad de productos que hay en el carrito
+    cantidadCarrito = document.getElementById("cantidad-carrito");
+    cantidadCarrito.innerText = `${idCompra}`;
     rtaTitle = burgerGeneradas[id].nombre;
     if (Number(miFormulario.tipo.value) === 0) {
       rtaMedallones =
@@ -600,7 +604,7 @@ const ver = (id) => {
       pedido.pepino(rtaPepinos);
       pedido.bacon(rtaExtraBacon);
       carrito.push(pedido);
-      console.log(carrito);
+      localStorage.setItem("compras", JSON.stringify(carrito));
     } else if (Number(miFormulario.tipo.value) === 1) {
       rtaMedallones =
         miFormulario.children[1].children[0].options[selection.selectedIndex]
@@ -628,7 +632,7 @@ const ver = (id) => {
       pedido.pepino(rtaPepinos);
       pedido.bacon(rtaExtraBacon);
       carrito.push(pedido);
-      console.log(carrito);
+      localStorage.setItem("compras", JSON.stringify(carrito));
     } else if (
       Number(miFormulario.tipo.value) > 1 &&
       Number(miFormulario.tipo.value) < 5
@@ -664,13 +668,15 @@ const ver = (id) => {
       pedido.pepino(rtaPepinos);
       pedido.bacon(rtaExtraBacon);
       carrito.push(pedido);
-      console.log(carrito);
+      localStorage.setItem("compras", JSON.stringify(carrito));
     }
   };
 };
 
 //Array de los productos comprados
-const carrito = [];
+let carrito;
+carrito = JSON.parse(localStorage.getItem("compras")) || [];
+console.log(carrito);
 
 //Constructor para guardar la burger y los agregados que quiere el usuario
 class BurgerAñadida {
