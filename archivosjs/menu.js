@@ -98,6 +98,7 @@ burgerGeneradas.forEach((elemento) => {
 // Creo las variables de precios
 // Creo las variables que van a recibir las respuestas del usuario
 let pedido;
+let precio = 0;
 let idCompra = 0;
 let rtaTitle;
 let rtaMedallones;
@@ -152,7 +153,7 @@ const ver = (id) => {
     </div>
     <div class="mt-3">
       <div class="container-valor-cantidad">
-        <p> valor $${burgerGeneradas[id].precioSimple}</p>
+        <p id="precio"> valor $${burgerGeneradas[id].precioSimple}</p>
         <div class="container-number">
           <label class="p-2" for="contador">
             Cantidad
@@ -208,7 +209,7 @@ const ver = (id) => {
     </div>
     <div class="mt-3">
       <div class="container-valor-cantidad">
-        <p> valor $${burgerGeneradas[id].precioSimple}</p>
+        <p id="precio"> valor $${burgerGeneradas[id].precioSimple}</p>
         <div class="container-number">
           <label class="p-2" for="contador">
             Cantidad
@@ -271,7 +272,7 @@ const ver = (id) => {
     </div>
     <div class="mt-3">
       <div class="container-valor-cantidad">
-        <p> valor $${burgerGeneradas[id].precioSimple}</p>
+        <p id="precio"> valor $${burgerGeneradas[id].precioSimple}</p>
         <div class="container-number">
           <label class="p-2" for="contador">
             Cantidad
@@ -334,7 +335,7 @@ const ver = (id) => {
       </div>
       <div class="mt-3">
         <div class="container-valor-cantidad">
-          <p> valor $${burgerGeneradas[id].precioSimple}</p>
+          <p id="precio"> valor $${burgerGeneradas[id].precioSimple}</p>
           <div class="container-number">
             <label class="p-2" for="contador">
               Cantidad
@@ -397,7 +398,7 @@ const ver = (id) => {
       </div>
       <div class="mt-3">
         <div class="container-valor-cantidad">
-          <p> valor $${burgerGeneradas[id].precioSimple}</p>
+          <p id="precio"> valor $${burgerGeneradas[id].precioSimple}</p>
           <div class="container-number">
             <label class="p-2" for="contador">
               Cantidad
@@ -417,16 +418,160 @@ const ver = (id) => {
     seleccionada.append(div);
   }
 
-  //Logica para guardar las respuestas del usuario y agregar la burger al carrito
+  //Variables que van a referenciar los inputs checkbox
   let selection = document.getElementById("selection");
+  let salsa = document.getElementById("salsa");
+  let cheddar = document.getElementById("cheddar");
+  let bacon = document.getElementById("bacon");
+  let pepino = document.getElementById("pepinos");
+  let precioBurger = document.getElementById("precio");
+
+  //En caso de que primero seleccione un checkbox
+  if (selection.options[0].selected === true) {
+    precio += 700;
+  }
+
+  // Logica obtener los valores de los inputs seleccionados y modificar el precio del DOM de la card (hamburguesa)
+  if (id === 0) {
+    selection.onchange = () => {
+      precio = 0;
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+      }
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+      }
+      if (selection.options[0].selected === true) {
+        precio += 700;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (selection.options[1].selected === true) {
+        precio += 800;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (selection.options[2].selected === true) {
+        precio += 900;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+
+    cheddar.onclick = () => {
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    pepino.onclick = () => {
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+  }
+
+  if (id === 1) {
+    selection.onchange = () => {
+      precio = 0;
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+      }
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+      }
+      if (selection.options[0].selected === true) {
+        precio += 700;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (selection.options[1].selected === true) {
+        precio += 800;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (selection.options[2].selected === true) {
+        precio += 900;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+
+    cheddar.onclick = () => {
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    bacon.onclick = () => {
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+  }
+
+  if (id > 1 || id < 5) {
+    selection.onchange = () => {
+      precio = 0;
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+      }
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+      }
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+      }
+      if (selection.options[0].selected === true) {
+        precio += 700;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (selection.options[1].selected === true) {
+        precio += 800;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (selection.options[2].selected === true) {
+        precio += 900;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+
+    cheddar.onclick = () => {
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    pepino.onclick = () => {
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    bacon.onclick = () => {
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+  }
+
+  //Logica para guardar las respuestas del usuario y agregar la burger al carrito
   formulario.onsubmit = (e) => {
     let miFormulario = e.target;
     e.preventDefault();
     idCompra++;
-    let salsa = document.getElementById("salsa");
-    let cheddar = document.getElementById("cheddar");
-    let bacon = document.getElementById("bacon");
-    let pepino = document.getElementById("pepinos");
     rtaTitle = burgerGeneradas[id].nombre;
     if (Number(miFormulario.tipo.value) === 0) {
       rtaMedallones =
