@@ -42,12 +42,17 @@
     border-radius: 3px;
     width: 30em;
     padding: 40px;
-    .eliminar-burger{
+    .resumen-burger-a-comprar{
+      margin-top: 1em;
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      .valortotal{
+      flex-direction: column;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.558);
+      .container-burgerTamaño-botonDelete{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        .burger-tamaño{
         padding: 0px;
         margin: 5px;
         @include titulos-subtitulos(1rem,("Neutra-Bold", sans-serif),700); 
@@ -57,17 +62,18 @@
         color: red;
         border: 1px solid red;
         border-radius: 2px;
-        margin-left: 1em;
-
         &:hover{
           color: white;
           background-color: red;
         }
       }
     }
-    .valortotal{
-      margin-top: 2em;
-      @include titulos-subtitulos(1.3rem,("Neutra-Bold", sans-serif),700); 
+    .resumen-contenido{
+      @include titulos-subtitulos(1rem,("Neutra-Bold", sans-serif),500); 
+      .precio-burger{
+        @include titulos-subtitulos(1rem,("Neutra-Bold", sans-serif),700); 
+      }
+    }
     }
     @media screen and (max-width:1048px) {
       width: 25em;
@@ -174,6 +180,7 @@
   color: #fff;
   display: none;
   .valortotal{
+    background-color: red;
     @include titulos-subtitulos(0.8rem,("Neutra-Bold", sans-serif),700); 
     @media screen and(max-width:468px) {
       font-size: 12px;

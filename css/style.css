@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* ICONOS LISTA*/
 /*MARGIN ENTRE ETIQUETAS SECTION*/
 header {
@@ -549,33 +550,42 @@ header nav ul li .logo-nav-footer {
   width: 30em;
   padding: 40px;
 }
-.section-general .container-hamburguesas-carrito .burger-elegidas .eliminar-burger {
+.section-general .container-hamburguesas-carrito .burger-elegidas .resumen-burger-a-comprar {
+  margin-top: 1em;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.558);
 }
-.section-general .container-hamburguesas-carrito .burger-elegidas .eliminar-burger .valortotal {
+.section-general .container-hamburguesas-carrito .burger-elegidas .resumen-burger-a-comprar .container-burgerTamaño-botonDelete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+.section-general .container-hamburguesas-carrito .burger-elegidas .resumen-burger-a-comprar .container-burgerTamaño-botonDelete .burger-tamaño {
   padding: 0px;
   margin: 5px;
   font-size: 1rem;
   font-family: "Neutra-Bold", sans-serif;
   font-weight: 700;
 }
-.section-general .container-hamburguesas-carrito .burger-elegidas .eliminar-burger button {
+.section-general .container-hamburguesas-carrito .burger-elegidas .resumen-burger-a-comprar .container-burgerTamaño-botonDelete button {
   background-color: #fff;
   color: red;
   border: 1px solid red;
   border-radius: 2px;
-  margin-left: 1em;
 }
-.section-general .container-hamburguesas-carrito .burger-elegidas .eliminar-burger button:hover {
+.section-general .container-hamburguesas-carrito .burger-elegidas .resumen-burger-a-comprar .container-burgerTamaño-botonDelete button:hover {
   color: white;
   background-color: red;
 }
-.section-general .container-hamburguesas-carrito .burger-elegidas .valortotal {
-  margin-top: 2em;
-  font-size: 1.3rem;
+.section-general .container-hamburguesas-carrito .burger-elegidas .resumen-burger-a-comprar .resumen-contenido {
+  font-size: 1rem;
+  font-family: "Neutra-Bold", sans-serif;
+  font-weight: 500;
+}
+.section-general .container-hamburguesas-carrito .burger-elegidas .resumen-burger-a-comprar .resumen-contenido .precio-burger {
+  font-size: 1rem;
   font-family: "Neutra-Bold", sans-serif;
   font-weight: 700;
 }
@@ -716,6 +726,7 @@ header nav ul li .logo-nav-footer {
   display: none;
 }
 .resumen-pedido .valortotal {
+  background-color: red;
   font-size: 0.8rem;
   font-family: "Neutra-Bold", sans-serif;
   font-weight: 700;
@@ -737,95 +748,6 @@ header nav ul li .logo-nav-footer {
   }
 }
 
-/*@import "../base/variables";
-@import "../base/extend";
-@import "../base/mixin";
-
-.container-titulo-seleccionada {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: $margen-entre-section;
-  margin-bottom: $margen-entre-section;
-
-  .titulo-seleccionada {
-    width: 100%;
-    text-align: center;
-    @include titulos-subtitulos(2rem, ("Neutra-Bold", sans-serif), 800);
-    opacity: 0.8;
-    padding: 15px;
-    @media screen and (max-width: 648px) {
-      font-size: 25px;
-    }
-    @media screen and (max-width: 468px) {
-      font-size: 20px;
-    }
-    @media screen and (max-width: 300px) {
-      font-size: 15px;
-    }
-  }
-  .nombre-seleccionada {
-    @include titulos-subtitulos(1.2rem, (Geneva, Tahoma), 700);
-    opacity: 0.7;
-    @media screen and (max-width: 648px) {
-      font-size: 20px;
-    }
-    @media screen and (max-width: 468px) {
-      font-size: 15px;
-    }
-    @media screen and (max-width: 300px) {
-      font-size: 10px;
-    }
-  }
-}
-
-.container-hamburguesas-seleccionadas {
-  @include flexing(flex, center);
-  margin-bottom: 2em;
-  .container-card-seleccionada {
-    width: 25em;
-    @extend %estructura-cards;
-    .container-inputs {
-      display: flex;
-      flex-direction: column;
-    }
-
-    @media screen and (max-width: 648px) {
-      width: 20em;
-    }
-    @media screen and (max-width: 320px) {
-      width: 15em;
-    }
-  }
-  .container-valor-cantidad {
-    @include flexing(flex, space-between);
-    padding: 20px;
-
-    .container-number {
-      @include flexing(flex, flex-end);
-      align-items: center;
-
-      .input-number {
-        width: 15%;
-      }
-    }
-  }
-}
-
-.container-enlaces-rapidos {
-  @include flexing(flex, center);
-  margin-bottom: $margen-entre-section;
-  .botones-menu-carrito {
-    margin: 20px;
-    @media screen and(max-width:468px) {
-      font-size: 12px;
-    }
-    @media screen and(max-width:320px) {
-      font-size: 10px;
-    }
-  }
-}
-*/
 /* ICONOS LISTA*/
 /*MARGIN ENTRE ETIQUETAS SECTION*/
 #footer {
