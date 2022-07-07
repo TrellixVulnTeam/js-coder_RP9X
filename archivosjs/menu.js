@@ -751,6 +751,11 @@ const ver = (id) => {
       carrito.push(pedido);
       localStorage.setItem("compras", JSON.stringify(carrito));
     }
+    Toastify({
+      text: "TU HAMBURGUESA FUE AGREGADA AL CARRITO",
+      duration: 3000,
+      className: "confirmacion",
+    }).showToast();
   };
 };
 

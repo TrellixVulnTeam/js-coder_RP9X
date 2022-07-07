@@ -101,3 +101,13 @@
     }
   }
 
+.confirmacion{
+  position: fixed;
+  text-align: center;
+  z-index: 200;
+  width: 100%;
+  padding: 20px;
+  background-color: rgb(0, 136, 0);
+  color: black;
+  @include titulos-subtitulos(1.2rem,("Neutra-Bold", sans-serif),800);  
+}
