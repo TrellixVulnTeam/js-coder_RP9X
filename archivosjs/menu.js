@@ -1,19 +1,9 @@
 // Constructor de burger que hay en el menu
 class GenerarBurger {
-  constructor(
-    nombre,
-    contenido,
-    precioSimple,
-    precioDoble,
-    precioTriple,
-    url,
-    id
-  ) {
+  constructor(nombre, contenido, precioSimple, url, id) {
     this.nombre = nombre;
     this.contenido = contenido;
     this.precioSimple = precioSimple;
-    this.precioDoble = precioDoble;
-    this.precioTriple = precioTriple;
     this.url = url;
     this.id = id;
   }
@@ -21,62 +11,24 @@ class GenerarBurger {
 
 const burgerGeneradas = [];
 
-burgerGeneradas.push(
-  new GenerarBurger(
-    "CHEESEBURGER",
-    "Medallon de carne de 120grs, cheddar y salsa thousand island. Incluye papas.",
-    700,
-    800,
-    900,
-    "../multimedia/imagenes/cheese.png",
-    0
-  )
-);
+const ObtenerBurgers = async () => {
+  console.log("aca");
+  const resp = await fetch("./data.json", {
+    mode: "no-cors",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
 
-burgerGeneradas.push(
-  new GenerarBurger(
-    "BACON CHEESEBURGER",
-    "Medallon de carne de 120grs, cheddar, panceta ahumada y salsa thousand island. Incluye papas.",
-    700,
-    800,
-    900,
-    "../multimedia/imagenes/bacon-menu.png",
-    1
-  )
-);
-burgerGeneradas.push(
-  new GenerarBurger(
-    "ROYALE",
-    "Medallon de carne de 120grs, cheddar, cebolla brunoise y salsa 1/4 de libra. Incluye papas.",
-    700,
-    800,
-    900,
-    "../multimedia/imagenes/royale.png",
-    2
-  )
-);
-burgerGeneradas.push(
-  new GenerarBurger(
-    "BIG MC",
-    "Medallon de carne de 120grs, cheddar, lechuga, cebolla picada, pepinos y salsa big mc. Incluye papas.",
-    700,
-    800,
-    900,
-    "../multimedia/imagenes/bg mc.png",
-    3
-  )
-);
-burgerGeneradas.push(
-  new GenerarBurger(
-    "FRIED ONION",
-    "Medallon de carne de 100grs smasheado junto a la cebolla. Incluye papas.",
-    700,
-    800,
-    900,
-    "../multimedia/imagenes/onion .png",
-    4
-  )
-);
+  const data = await resp.json();
+  data.forEach((el) => {
+    burgerGeneradas.push(
+      new GenerarBurger(el.nombre, el.contenido, el.precioSimple, el.url, el.id)
+    );
+  });
+};
+
+ObtenerBurgers();
 
 // Muestro en el DOM las burger que hay en el menu
 let contenedorCards = document.getElementById("container-hamburguesas-menu");
@@ -113,17 +65,11 @@ const PrecioPepinos = 50;
 let cantidadCarrito = document.getElementById("cantidad-carrito");
 cantidadCarrito.innerText = `${idCompra}`;
 
-//Muestro en el DOM las opciones de la burger que quiere ver el usuario
-//Funcion del evento onclick
-const ver = (id) => {
-  contenedorCards.remove();
-  let tituloSeccion = document.getElementById("titulo-seccion");
-  tituloSeccion.innerText = "HAMBURGUESA SELECCIONADA";
-  let seleccionada = document.getElementById("cardSeleccionada");
-  if (id === 0) {
-    let div = document.createElement("div");
-    div.className = "container-card-seleccionada";
-    div.innerHTML = `
+//Funciones que me generan las cardSeleccionadas en el DOM
+const crearCheeseCard = (id, seleccionada) => {
+  let div = document.createElement("div");
+  div.className = "container-card-seleccionada";
+  div.innerHTML = `
   <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="Cheeseburger">
   <div class="card-body">
     <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
@@ -174,12 +120,13 @@ const ver = (id) => {
     <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
 </div>
 `;
-    seleccionada.append(div);
-  }
-  if (id === 1) {
-    let div = document.createElement("div");
-    div.className = "container-card-seleccionada";
-    div.innerHTML = `
+  seleccionada.append(div);
+};
+
+const crearBaconCard = (id, seleccionada) => {
+  let div = document.createElement("div");
+  div.className = "container-card-seleccionada";
+  div.innerHTML = `
   <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="Bacon Cheeseburger">
   <div class="card-body">
     <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
@@ -230,13 +177,13 @@ const ver = (id) => {
     <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
 </div>
 `;
-    seleccionada.append(div);
-  }
+  seleccionada.append(div);
+};
 
-  if (id === 2) {
-    let div = document.createElement("div");
-    div.className = "container-card-seleccionada";
-    div.innerHTML = `
+const crearRoyaleCard = (id, seleccionada) => {
+  let div = document.createElement("div");
+  div.className = "container-card-seleccionada";
+  div.innerHTML = `
   <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="Royale">
   <div class="card-body">
     <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
@@ -293,13 +240,13 @@ const ver = (id) => {
     <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
 </div>
 `;
-    seleccionada.append(div);
-  }
+  seleccionada.append(div);
+};
 
-  if (id === 3) {
-    let div = document.createElement("div");
-    div.className = "container-card-seleccionada";
-    div.innerHTML = `
+const crearBigMcCard = (id, seleccionada) => {
+  let div = document.createElement("div");
+  div.className = "container-card-seleccionada";
+  div.innerHTML = `
     <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="BigMc">
     <div class="card-body">
       <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
@@ -356,13 +303,13 @@ const ver = (id) => {
       <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
   </div>
   `;
-    seleccionada.append(div);
-  }
+  seleccionada.append(div);
+};
 
-  if (id === 4) {
-    let div = document.createElement("div");
-    div.className = "container-card-seleccionada";
-    div.innerHTML = `
+const crearOnionCard = (id, seleccionada) => {
+  let div = document.createElement("div");
+  div.className = "container-card-seleccionada";
+  div.innerHTML = `
     <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="Fried Onion">
     <div class="card-body">
       <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
@@ -419,8 +366,25 @@ const ver = (id) => {
       <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
   </div>
   `;
-    seleccionada.append(div);
-  }
+  seleccionada.append(div);
+};
+
+//Funciones para mostrar en el DOM las opciones de la burger que quiere ver el usuario
+//Funcion del evento onclick
+const ver = (id) => {
+  contenedorCards.remove();
+  let tituloSeccion = document.getElementById("titulo-seccion");
+  tituloSeccion.innerText = "HAMBURGUESA SELECCIONADA";
+  let seleccionada = document.getElementById("cardSeleccionada");
+  id === 0
+    ? crearCheeseCard(id, seleccionada)
+    : id === 1
+    ? crearBaconCard(id, seleccionada)
+    : id === 2
+    ? crearRoyaleCard(id, seleccionada)
+    : id === 3
+    ? crearBigMcCard(id, seleccionada)
+    : crearOnionCard(id, seleccionada);
 
   //Variables que van a referenciar los inputs checkbox
   let selection = document.getElementById("selection");
@@ -430,192 +394,217 @@ const ver = (id) => {
   let pepino = document.getElementById("pepinos");
   let precioBurger = document.getElementById("precio");
 
+  // Funciones obtener los valores de los inputs seleccionados y modificar el precio del DOM de la card (hamburguesa)
+  const inputsCheese = () => {
+    selection.onchange = () => {
+      let simple = selection.options[0].selected;
+      let doble = selection.options[1].selected;
+      let triple = selection.options[2].selected;
+      precio = 0;
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+      }
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+      }
+      if (simple === true) {
+        precio += 700;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (doble === true) {
+        precio += 800;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (triple === true) {
+        precio += 900;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+
+    cheddar.onclick = () => {
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    pepino.onclick = () => {
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+  };
+
+  const inputsBacon = () => {
+    selection.onchange = () => {
+      let simple = selection.options[0].selected;
+      let doble = selection.options[1].selected;
+      let triple = selection.options[2].selected;
+      precio = 0;
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+      }
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+      }
+      if (simple === true) {
+        precio += 700;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (doble === true) {
+        precio += 800;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (selection.options[2].selected === true) {
+        precio += 900;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+
+    cheddar.onclick = () => {
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    bacon.onclick = () => {
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+  };
+
+  const inputsRoyaleAndOnion = () => {
+    selection.onchange = () => {
+      let simple = selection.options[0].selected;
+      let doble = selection.options[1].selected;
+      let triple = selection.options[2].selected;
+      precio = 0;
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+      }
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+      }
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+      }
+      if (simple === true) {
+        precio += 700;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (doble === true) {
+        precio += 800;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (triple === true) {
+        precio += 900;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+
+    cheddar.onclick = () => {
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    pepino.onclick = () => {
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    bacon.onclick = () => {
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+  };
+
+  const inputsBigMc = () => {
+    selection.onchange = () => {
+      let simple = selection.options[0].selected;
+      let doble = selection.options[1].selected;
+      let triple = selection.options[2].selected;
+      precio = 0;
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+      }
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+      }
+      if (pepino.checked) {
+        precio += PrecioPepinos;
+      }
+      if (simple === true) {
+        precio += 700;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (doble === true) {
+        precio += 800;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else if (triple === true) {
+        precio += 900;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+
+    cheddar.onclick = () => {
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    pepino.onclick = () => {
+      if (pepino.checked) {
+        precio -= PrecioPepinos;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+    bacon.onclick = () => {
+      if (bacon.checked) {
+        precio += PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      } else {
+        precio -= PrecioExtraBacon;
+        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
+      }
+    };
+  };
   //En caso de que primero seleccione un checkbox
   if (selection.options[0].selected === true) {
     precio += 700;
   }
-
   // Logica obtener los valores de los inputs seleccionados y modificar el precio del DOM de la card (hamburguesa)
-  if (id === 0) {
-    selection.onchange = () => {
-      precio = 0;
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-      }
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-      }
-      if (selection.options[0].selected === true) {
-        precio += 700;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else if (selection.options[1].selected === true) {
-        precio += 800;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else if (selection.options[2].selected === true) {
-        precio += 900;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
+  id === 0
+    ? inputsCheese()
+    : id === 1
+    ? inputsBacon()
+    : id === 2 || id === 4
+    ? inputsRoyaleAndOnion()
+    : inputsBigMc();
 
-    cheddar.onclick = () => {
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioExtraCheddar;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-    pepino.onclick = () => {
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioPepinos;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-  } else if (id === 1) {
-    selection.onchange = () => {
-      precio = 0;
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-      }
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-      }
-      if (selection.options[0].selected === true) {
-        precio += 700;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else if (selection.options[1].selected === true) {
-        precio += 800;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else if (selection.options[2].selected === true) {
-        precio += 900;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-
-    cheddar.onclick = () => {
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioExtraCheddar;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-    bacon.onclick = () => {
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioExtraBacon;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-  } else if (id === 2 || id === 4) {
-    selection.onchange = () => {
-      precio = 0;
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-      }
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-      }
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-      }
-      if (selection.options[0].selected === true) {
-        precio += 700;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else if (selection.options[1].selected === true) {
-        precio += 800;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else if (selection.options[2].selected === true) {
-        precio += 900;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-
-    cheddar.onclick = () => {
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioExtraCheddar;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-    pepino.onclick = () => {
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioPepinos;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-    bacon.onclick = () => {
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioExtraBacon;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-  } else if (id === 3) {
-    selection.onchange = () => {
-      precio = 0;
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-      }
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-      }
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-      }
-      if (selection.options[0].selected === true) {
-        precio += 700;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else if (selection.options[1].selected === true) {
-        precio += 800;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else if (selection.options[2].selected === true) {
-        precio += 900;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-
-    cheddar.onclick = () => {
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioExtraCheddar;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-    pepino.onclick = () => {
-      if (pepino.checked) {
-        precio -= PrecioPepinos;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-    bacon.onclick = () => {
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      } else {
-        precio -= PrecioExtraBacon;
-        precioBurger.innerHTML = `<p id="precio"> valor $${precio}</p>`;
-      }
-    };
-  }
-
-  //Logica para guardar las respuestas del usuario y agregar la burger al carrito
+  //Logica para guardar las respuestas del usuario y agregar las burger al carrito
   formulario.onsubmit = (e) => {
     let miFormulario = e.target;
     e.preventDefault();
@@ -625,26 +614,21 @@ const ver = (id) => {
     cantidadCarrito = document.getElementById("cantidad-carrito");
     cantidadCarrito.innerText = `${idCompra}`;
     rtaTitle = burgerGeneradas[id].nombre;
-    if (Number(miFormulario.tipo.value) === 0) {
+    //Funciones obteniendo submit
+    const añadirCheese = () => {
       rtaMedallones =
         miFormulario.children[1].children[0].options[selection.selectedIndex]
           .value;
-      if (salsa.checked) {
-        rtaAderezo = miFormulario.children[1].children[1].children[0].value;
-      } else {
-        rtaAderezo = "Con salsa";
-      }
-      if (cheddar.checked) {
-        rtaExtraCheddar =
-          miFormulario.children[1].children[2].children[0].value;
-      } else {
-        rtaExtraCheddar = "Sin Extra Cheddar";
-      }
-      if (pepino.checked) {
-        rtaPepinos = miFormulario.children[1].children[3].children[0].value;
-      } else {
-        rtaPepinos = "Sin Pepinos";
-      }
+      salsa.checked
+        ? (rtaAderezo = miFormulario.children[1].children[1].children[0].value)
+        : (rtaAderezo = "Con salsa");
+      cheddar.checked
+        ? (rtaExtraCheddar =
+            miFormulario.children[1].children[2].children[0].value)
+        : (rtaExtraCheddar = "Sin Extra Cheddar");
+      pepino.checked
+        ? (rtaPepinos = miFormulario.children[1].children[3].children[0].value)
+        : (rtaPepinos = "Sin Pepinos");
       pedido = new BurgerAñadida(rtaTitle, rtaMedallones, idCompra);
       pedido.precioMedallones(rtaMedallones);
       pedido.adereso(rtaAderezo);
@@ -653,26 +637,28 @@ const ver = (id) => {
       pedido.bacon(rtaExtraBacon);
       carrito.push(pedido);
       localStorage.setItem("compras", JSON.stringify(carrito));
-    } else if (Number(miFormulario.tipo.value) === 1) {
+      Toastify({
+        text: "TU HAMBURGUESA FUE AGREGADA AL CARRITO",
+        duration: 3000,
+        className: "confirmacion",
+      }).showToast();
+    };
+
+    const añadirBacon = () => {
       rtaMedallones =
         miFormulario.children[1].children[0].options[selection.selectedIndex]
           .value;
-      if (salsa.checked) {
-        rtaAderezo = miFormulario.children[1].children[1].children[0].value;
-      } else {
-        rtaAderezo = "Con salsa";
-      }
-      if (cheddar.checked) {
-        rtaExtraCheddar =
-          miFormulario.children[1].children[2].children[0].value;
-      } else {
-        rtaExtraCheddar = "Sin Extra Cheddar";
-      }
-      if (bacon.checked) {
-        rtaExtraBacon = miFormulario.children[1].children[3].children[0].value;
-      } else {
-        rtaExtraBacon = "Sin Extra Bacon";
-      }
+      salsa.checked
+        ? (rtaAderezo = miFormulario.children[1].children[1].children[0].value)
+        : (rtaAderezo = "Con salsa");
+      cheddar.checked
+        ? (rtaExtraCheddar =
+            miFormulario.children[1].children[2].children[0].value)
+        : (rtaExtraCheddar = "Sin Extra Cheddar");
+      bacon.checked
+        ? (rtaExtraBacon =
+            miFormulario.children[1].children[3].children[0].value)
+        : (rtaExtraBacon = "Sin Extra Bacon");
       pedido = new BurgerAñadida(rtaTitle, rtaMedallones, idCompra);
       pedido.precioMedallones(rtaMedallones);
       pedido.adereso(rtaAderezo);
@@ -681,34 +667,31 @@ const ver = (id) => {
       pedido.bacon(rtaExtraBacon);
       carrito.push(pedido);
       localStorage.setItem("compras", JSON.stringify(carrito));
-    } else if (
-      Number(miFormulario.tipo.value) === 2 ||
-      Number(miFormulario.tipo.value) === 4
-    ) {
+      Toastify({
+        text: "TU HAMBURGUESA FUE AGREGADA AL CARRITO",
+        duration: 3000,
+        className: "confirmacion",
+      }).showToast();
+    };
+
+    const añadirRoyaleAndOnion = () => {
       rtaMedallones =
         miFormulario.children[1].children[0].options[selection.selectedIndex]
           .value;
-      if (salsa.checked) {
-        rtaAderezo = miFormulario.children[1].children[1].children[0].value;
-      } else {
-        rtaAderezo = "Con salsa";
-      }
-      if (cheddar.checked) {
-        rtaExtraCheddar =
-          miFormulario.children[1].children[2].children[0].value;
-      } else {
-        rtaExtraCheddar = "Sin Extra Cheddar";
-      }
-      if (bacon.checked) {
-        rtaExtraBacon = miFormulario.children[1].children[3].children[0].value;
-      } else {
-        rtaExtraBacon = "Sin Extra Bacon";
-      }
-      if (pepino.checked) {
-        rtaPepinos = miFormulario.children[1].children[4].children[0].value;
-      } else {
-        rtaPepinos = "Sin Pepinos";
-      }
+      salsa.checked
+        ? (rtaAderezo = miFormulario.children[1].children[1].children[0].value)
+        : (rtaAderezo = "Con salsa");
+      cheddar.checked
+        ? (rtaExtraCheddar =
+            miFormulario.children[1].children[2].children[0].value)
+        : (rtaExtraCheddar = "Sin Extra Cheddar");
+      bacon.checked
+        ? (rtaExtraBacon =
+            miFormulario.children[1].children[3].children[0].value)
+        : (rtaExtraBacon = "Sin Extra Bacon");
+      pepino.checked
+        ? (rtaPepinos = miFormulario.children[1].children[4].children[0].value)
+        : (rtaPepinos = "Sin Pepinos");
       pedido = new BurgerAñadida(rtaTitle, rtaMedallones, idCompra);
       pedido.precioMedallones(rtaMedallones);
       pedido.adereso(rtaAderezo);
@@ -717,31 +700,31 @@ const ver = (id) => {
       pedido.bacon(rtaExtraBacon);
       carrito.push(pedido);
       localStorage.setItem("compras", JSON.stringify(carrito));
-    } else if (Number(miFormulario.tipo.value) === 3) {
+      Toastify({
+        text: "TU HAMBURGUESA FUE AGREGADA AL CARRITO",
+        duration: 3000,
+        className: "confirmacion",
+      }).showToast();
+    };
+
+    const añadirBigMc = () => {
       rtaMedallones =
         miFormulario.children[1].children[0].options[selection.selectedIndex]
           .value;
-      if (salsa.checked) {
-        rtaAderezo = miFormulario.children[1].children[1].children[0].value;
-      } else {
-        rtaAderezo = "Con salsa";
-      }
-      if (cheddar.checked) {
-        rtaExtraCheddar =
-          miFormulario.children[1].children[2].children[0].value;
-      } else {
-        rtaExtraCheddar = "Sin Extra Cheddar";
-      }
-      if (bacon.checked) {
-        rtaExtraBacon = miFormulario.children[1].children[3].children[0].value;
-      } else {
-        rtaExtraBacon = "Sin Extra Bacon";
-      }
-      if (pepino.checked) {
-        rtaPepinos = miFormulario.children[1].children[4].children[0].value;
-      } else {
-        rtaPepinos = "Con pepinos";
-      }
+      salsa.checked
+        ? (rtaAderezo = miFormulario.children[1].children[1].children[0].value)
+        : (rtaAderezo = "Con salsa");
+      cheddar.checked
+        ? (rtaExtraCheddar =
+            miFormulario.children[1].children[2].children[0].value)
+        : (rtaExtraCheddar = "Sin Extra Cheddar");
+      bacon.checked
+        ? (rtaExtraBacon =
+            miFormulario.children[1].children[3].children[0].value)
+        : (rtaExtraBacon = "Sin Extra Bacon");
+      pepino.checked
+        ? (rtaPepinos = miFormulario.children[1].children[4].children[0].value)
+        : (rtaPepinos = "Con pepinos");
       pedido = new BurgerAñadida(rtaTitle, rtaMedallones, idCompra);
       pedido.precioMedallones(rtaMedallones);
       pedido.adereso(rtaAderezo);
@@ -750,12 +733,23 @@ const ver = (id) => {
       pedido.bacon(rtaExtraBacon);
       carrito.push(pedido);
       localStorage.setItem("compras", JSON.stringify(carrito));
-    }
-    Toastify({
-      text: "TU HAMBURGUESA FUE AGREGADA AL CARRITO",
-      duration: 3000,
-      className: "confirmacion",
-    }).showToast();
+      Toastify({
+        text: "TU HAMBURGUESA FUE AGREGADA AL CARRITO",
+        duration: 3000,
+        className: "confirmacion",
+      }).showToast();
+    };
+
+    //Obtengo resultados de la cheese
+    Number(miFormulario.tipo.value) === 0
+      ? añadirCheese()
+      : Number(miFormulario.tipo.value) === 1
+      ? añadirBacon()
+      : Number(miFormulario.tipo.value) === 2 ||
+        Number(miFormulario.tipo.value) === 4
+      ? añadirRoyaleAndOnion()
+      : Number(miFormulario.tipo.value) === 3;
+    añadirBigMc();
   };
 };
 
@@ -830,3 +824,55 @@ class BurgerAñadida {
     }
   }
 }
+
+/* fetch(url, config); */
+
+/* fetch('https://jsonplaceholder.typicode.com/posts')
+.then(response => response.json())
+.then(res => {
+  console.log(res[0].title);
+  console.log(res[0].body);
+}); */
+
+/* const lista = document.getElementById("listado");
+fetch('https://jsonplaceholder.typicode.com/posts')
+.then(response => response.json())
+.then(res => {
+  res.forEach(post => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <h2>${post.title}</h2>
+      <p>${post.body}</p>
+    `;
+    lista.append(li);
+  });
+}); */
+
+/* fetch('https://jsonplaceholder.typicode.com/posts', {
+  method: 'POST',
+  body: JSON.stringify({
+    title: "Mi post",
+    body: "Estamos conectando con una api",
+    userId: 1
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+.then(response => response.json())
+.then(response => console.log(response)) */
+
+/* fetch("./data.json")
+  .then((res) => res.json())
+  .then((data) => {
+    data.forEach((producto) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+                <h4>${producto.nombre}</h4>
+                <p>${producto.precio}</p>
+                <p>Código: ${producto.id}</p>
+                <hr/>
+            `;
+      lista.append(li);
+    });
+  }); */
