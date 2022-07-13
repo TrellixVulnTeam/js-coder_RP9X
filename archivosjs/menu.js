@@ -13,7 +13,7 @@ const burgerGeneradas = [];
 
 const ObtenerBurgers = async () => {
   console.log("aca");
-  const resp = await fetch("./data.json", {
+  const resp = await fetch("../data.json", {
     mode: "no-cors",
     headers: {
       "Access-Control-Allow-Origin": "*",
