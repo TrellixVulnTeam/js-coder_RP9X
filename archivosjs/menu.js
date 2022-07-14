@@ -13,29 +13,23 @@ const burgerGeneradas = [];
 
 const ObtenerBurgers = async () => {
   console.log("aca");
-  const resp = await fetch("../data.json", {
-    mode: "no-cors",
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-  });
-
+  const resp = await fetch("../public/data.json");
   const data = await resp.json();
   data.forEach((el) => {
     burgerGeneradas.push(
       new GenerarBurger(el.nombre, el.contenido, el.precioSimple, el.url, el.id)
     );
   });
+  probando();
 };
-
-ObtenerBurgers();
 
 // Muestro en el DOM las burger que hay en el menu
 let contenedorCards = document.getElementById("container-hamburguesas-menu");
-burgerGeneradas.forEach((elemento) => {
-  let card = document.createElement(`div`);
-  card.className = "container-card";
-  card.innerHTML = `<img src="${elemento.url}" class="card-img-top ">
+const probando = () => {
+  burgerGeneradas.forEach((elemento) => {
+    let card = document.createElement(`div`);
+    card.className = "container-card";
+    card.innerHTML = `<img src="${elemento.url}" class="card-img-top ">
                       <div class="card-body">
                       <h3 class="titulo-card text-center">
                       ${elemento.nombre} </h3>
@@ -43,8 +37,9 @@ burgerGeneradas.forEach((elemento) => {
                       <p class="card-text">Desde $${elemento.precioSimple} </p>
                       <button class="btn btn-outline-dark w-100" onclick="ver(${elemento.id})">Ver opciones</button>
                       `;
-  contenedorCards.append(card);
-});
+    contenedorCards.append(card);
+  });
+};
 
 // Creo las variables de precios de extras
 // Creo las variables que van a recibir las respuestas del usuario
@@ -824,7 +819,7 @@ class BurgerAñadida {
     }
   }
 }
-
+ObtenerBurgers();
 /* fetch(url, config); */
 
 /* fetch('https://jsonplaceholder.typicode.com/posts')
