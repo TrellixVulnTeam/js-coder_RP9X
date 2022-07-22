@@ -73,19 +73,6 @@
         width: 15em;
       }
     }
-    .container-valor-cantidad {
-      @include flexing(flex, space-between);
-      padding: 20px;
-  
-      .container-number {
-        @include flexing(flex, flex-end);
-        align-items: center;
-  
-        .input-number {
-          width: 15%;
-        }
-      }
-    }
   }
   
   .container-enlaces-rapidos {
