@@ -1,57 +1,84 @@
 @import "../base/variables";
 @import "../base/mixin";
 
-
+#section-abierto-cerrado{
+  display: flex;
+  justify-content: center;
+  margin-top: 3em;
+  .cerrado {
+    @include titulos-subtitulos(2rem,("Neutra-Bold", sans-serif),800);     
+    color: red;
+  }
+  .abierto {
+    font-size: 2rem;
+    @include titulos-subtitulos(2rem,("Neutra-Bold", sans-serif),800);     
+    color: green;
+  }
+}
 
 
 .menu-galeria{
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  margin-top: 2em;
+  margin-right: 2em;
+  margin-left: 2em;
 
-    .menu-img1 {
-        width: 50%;
-        height: 20em;
-        @include flexing(flex,center);
-        align-items: flex-end;
-        animation: changeImg 20s;
-        animation-iteration-count: infinite;
-        animation-timing-function:ease-in-out;
-
-        @keyframes changeImg {
-            0%{
-              background-image: url(../multimedia/imagenes/bacon-menu.png);
-              background-repeat: no-repeat;
-              background-position: 50% 50%;
-              background-size: cover;
-            }
-            50%{
-              background-image: url(../multimedia//imagenes/bacon\ ab.png);
-              background-repeat: no-repeat;
-              background-position: 50% 50%;
-              background-size: cover;
-            }
-            100%{
-              background-image: url(../multimedia/imagenes/bacon-menu.png);
-              background-repeat: no-repeat;
-              background-position: 50% 50%;
-              background-size: cover;
-            }
-        }
-        @media screen and (max-width:500px){
-        width: 100%;
-        height: 12em;
-      } 
-    }
-    .menu-img2 {
-        width: 50%;
-        height: 20em;
-        background-image: url(../multimedia/imagenes/royale-inicio.png);
+  .menu-img1 {
+    margin: 1em;
+    width: 50%;
+    height: 20em;
+    @include flexing(flex,center);
+    align-items: flex-end;
+    animation: changeImg 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function:ease-in-out;
+    border-radius: 10px;
+    box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.84);
+    -webkit-box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.84);
+    -moz-box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.84);
+    @keyframes changeImg {
+      0%{
+        background-image: url(../multimedia/imagenes/bacon-menu.png);
         background-repeat: no-repeat;
         background-position: 50% 50%;
         background-size: cover;
+      }
+      50%{
+        background-image: url(../multimedia//imagenes/bacon\ ab.png);
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: cover;
+      }
+      100%{
+        background-image: url(../multimedia/imagenes/bacon-menu.png);
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: cover;
+      }
+    }
+    @media screen and (max-width:648px){
+      margin: 0px;
+      width: 100%;
+      height: 12em;
+    } 
+  }
+  .menu-img2 {
+    margin: 1em;
+    width: 50%;
+    height: 20em;
+    background-image: url(../multimedia/imagenes/royale-inicio.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.84);
+    -webkit-box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.84);
+    -moz-box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.84);
+
       
-        @include flexing(flex,center);    
-        align-items: flex-end;
+    @include flexing(flex,center);    
+      align-items: flex-end;
     
       &:hover{
         animation: changeImg2 2s;
@@ -82,14 +109,17 @@
               background-size: cover;
             }
             
-          }
+        }
       }
-      @media screen and (max-width:500px){
+      @media screen and (max-width:648px){
+        margin: 0px;
+        margin-top: 2em;
         width: 100%;
         height: 12em;
       } 
     }
-    @media screen and (max-width:500px){
+    @media screen and (max-width:648px){
+      margin-top: 4em;
       display: flex;
       flex-direction: column;
     }   

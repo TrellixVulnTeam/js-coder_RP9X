@@ -1,9 +1,19 @@
 // Constructor de burger que hay en el menu
 class GenerarBurger {
-  constructor(nombre, contenido, precioSimple, url, id) {
+  constructor(
+    nombre,
+    contenido,
+    precioSimple,
+    precioDoble,
+    precioTriple,
+    url,
+    id
+  ) {
     this.nombre = nombre;
     this.contenido = contenido;
     this.precioSimple = precioSimple;
+    this.precioDoble = precioDoble;
+    this.precioTriple = precioTriple;
     this.url = url;
     this.id = id;
   }
@@ -15,34 +25,42 @@ const ObtenerBurgers = async () => {
   const data = await resp.json();
   data.forEach((el) => {
     burgerGeneradas.push(
-      new GenerarBurger(el.nombre, el.contenido, el.precioSimple, el.url, el.id)
+      new GenerarBurger(
+        el.nombre,
+        el.contenido,
+        el.precioSimple,
+        el.precioDoble,
+        el.precioTriple,
+        el.url,
+        el.id
+      )
     );
   });
   mostrarCards();
 };
 ObtenerBurgers();
 
-// Muestro en el DOM las burger que hay en el menu
+// Muestro en el DOM las burger que obtuve con el fetch
 let contenedorCards = document.getElementById("container-hamburguesas-menu");
 const mostrarCards = () => {
   burgerGeneradas.forEach((elemento) => {
     let card = document.createElement(`div`);
     card.className = "container-card";
-    card.innerHTML = `<img src="${elemento.url}" class="card-img-top ">
-                      <div class="card-body">
-                      <h3 class="titulo-card text-center">
-                      ${elemento.nombre} </h3>
-                      <p class="card-text">${elemento.contenido}</p>
-                      <p class="card-text">Desde $${elemento.precioSimple} </p>
-                      <button class="btn btn-outline-dark w-100" onclick="ver(${elemento.id})">Ver opciones</button>
-                      `;
+    card.innerHTML = `
+    <img src="${elemento.url}" class="card-img-top ">
+    <div class="card-body">
+      <h3 class="titulo-card text-center">${elemento.nombre} </h3>
+      <p class="card-text">${elemento.contenido}</p>
+      <p class="card-text">Desde $${elemento.precioSimple} </p>
+      <button class="btn btn-outline-dark w-100" onclick="ver(${elemento.id})">Ver opciones</button>
+    </div>`;
     contenedorCards.append(card);
   });
 };
 
-// Creo las variables de precios de extras
 // Creo las variables que van a recibir las respuestas del usuario
-let idCompra = localStorage.getItem("idCompra") || 0;
+// Creo las variables de precios de extras
+let idCompra = Number(localStorage.getItem("idCompra")) || 0;
 let pedido;
 let precio = 0;
 let rtaTitle;
@@ -60,263 +78,276 @@ let carrito = JSON.parse(localStorage.getItem("compras")) || [];
 let cantidadCarrito = document.getElementById("cantidad-carrito");
 cantidadCarrito.innerText = `${idCompra}`;
 
+//Funcion para no mostrar el boton enviar al carrito en caso de que este cerrado
+const DateTime = luxon.DateTime;
+const dt = DateTime.now();
+const diaSemana = dt.weekday;
+const cerrado = () => {
+  let cerrar = document.getElementById("cerrar");
+  let textoCerrado = document.getElementById("mostrar-cerrado");
+  if (diaSemana < 4) {
+    cerrar.remove();
+    textoCerrado.innerText = "CERRADO";
+  }
+};
 //Funciones que me generan las cardSeleccionadas en el DOM
 const crearCheeseCard = (id, seleccionada) => {
   let div = document.createElement("div");
   div.className = "container-card-seleccionada";
   div.innerHTML = `
-  <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="Cheeseburger">
-  <div class="card-body">
-    <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
-    <p class="card-text border-bottom pb-3"> ${burgerGeneradas[id].contenido}</p>
-    <form class="container-inputs" id="formulario">
-    <div>
-      <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
-        <option value="Simple">Simple</option>
-        <option value="Doble">Doble</option>
-        <option value="Triple">Triple</option>
-      </select>
-        <div class="form-check ">
-          <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
-          <label class="form-check-label" for="salsa">
-            Sin salsa
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
-          <label class="form-check-label" for="cheddar">
-            Extra cheddar
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
-          <label class="form-check-label" for="pepinos">
-            Con pepinos
-          </label>
-        </div>
+  <div class="header-card">
+    <div class="container-enlaces-rapidos">
+      <h4 class="card-title">${burgerGeneradas[id].nombre}</h4>
+      <div>
+        <a href="menu.html" class="volver">VOLVER</a>
+        <a href="carrito.html" class="carrito">CARRITO</a>
+      </div>
+    </div>
+  </div>
+  <form class="container-inputs" id="formulario">
+    <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
+      <option value="Simple">Simple</option>
+      <option value="Doble">Doble</option>
+      <option value="Triple">Triple</option>
+    </select>
+    <div class="form-check ">
+      <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
+      <label class="form-check-label" for="salsa">
+        Sin salsa
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
+      <label class="form-check-label" for="cheddar">
+        Extra cheddar
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
+      <label class="form-check-label" for="pepinos">
+        Con pepinos
+      </label>
     </div>
     <div class="mt-3">      
-    <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
-    <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100">
-  </div>
-  </div>
+      <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
+      <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100"
+      id="cerrar">
+      <p id="mostrar-cerrado"></p>
+    </div>
   </form>
-  <div class="container-enlaces-rapidos">
-    <a href="menu.html" class="btn btn-outline-dark botones-menu-carrito">VOLVER AL MENU</a>
-    <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
-</div>
 `;
   seleccionada.append(div);
+  cerrado();
 };
 
 const crearBaconCard = (id, seleccionada) => {
   let div = document.createElement("div");
   div.className = "container-card-seleccionada";
   div.innerHTML = `
-  <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="Bacon Cheeseburger">
-  <div class="card-body">
-    <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
-    <p class="card-text border-bottom pb-3"> ${burgerGeneradas[id].contenido}</p>
-    <form class="container-inputs" id="formulario">
-    <div>
-      <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
-        <option value="Simple">Simple</option>
-        <option value="Doble">Doble</option>
-        <option value="Triple">Triple</option>
-      </select>
-        <div class="form-check ">
-          <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
-          <label class="form-check-label" for="salsa">
-            Sin salsa
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
-          <label class="form-check-label" for="cheddar">
-            Extra cheddar
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
-          <label class="form-check-label" for="bacon">
-            Extra bacon
-          </label>
-        </div>
+  <div class="header-card">
+    <div class="container-enlaces-rapidos">
+      <h4 class="card-title">${burgerGeneradas[id].nombre}</h4>
+      <div class="div-title-largo">
+        <a href="menu.html" class="volver">VOLVER</a>
+        <a href="carrito.html" class="carrito">CARRITO</a>
+      </div>
+    </div>
+  </div>
+  <form class="container-inputs" id="formulario">
+    <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
+      <option value="Simple">Simple</option>
+      <option value="Doble">Doble</option>
+      <option value="Triple">Triple</option>
+    </select>
+    <div class="form-check ">
+      <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
+      <label class="form-check-label" for="salsa">
+        Sin salsa
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
+      <label class="form-check-label" for="cheddar">
+        Extra cheddar
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
+      <label class="form-check-label" for="bacon">
+        Extra bacon
+      </label>
     </div>
     <div class="mt-3">      
-    <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
-    <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100">
-  </div>
-  </div>
+      <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
+      <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100" id="cerrar">
+      <p id="mostrar-cerrado"></p>
+    </div>
   </form>
-  <div class="container-enlaces-rapidos">
-    <a href="menu.html" class="btn btn-outline-dark botones-menu-carrito">VOLVER AL MENU</a>
-    <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
-</div>
 `;
   seleccionada.append(div);
+  cerrado();
 };
 
 const crearRoyaleCard = (id, seleccionada) => {
   let div = document.createElement("div");
   div.className = "container-card-seleccionada";
   div.innerHTML = `
-  <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="Royale">
-  <div class="card-body">
-    <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
-    <p class="card-text border-bottom pb-3"> ${burgerGeneradas[id].contenido}</p>
-    <form class="container-inputs" id="formulario">
-    <div>
-      <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
-        <option value="Simple">Simple</option>
-        <option value="Doble">Doble</option>
-        <option value="Triple">Triple</option>
-      </select>
-        <div class="form-check ">
-          <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
-          <label class="form-check-label" for="salsa">
-            Sin salsa
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
-          <label class="form-check-label" for="cheddar">
-            Extra cheddar
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
-          <label class="form-check-label" for="bacon">
-            Extra bacon
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
-          <label class="form-check-label" for="pepinos">
-            Con pepinos
-          </label>
-        </div>
+  <div class="header-card">
+    <div class="container-enlaces-rapidos">
+      <h4 class="card-title">${burgerGeneradas[id].nombre}</h4>
+      <div>
+        <a href="menu.html" class="volver">VOLVER</a>
+        <a href="carrito.html" class="carrito">CARRITO</a>
+      </div>
+    </div>
+  </div>
+  <form class="container-inputs" id="formulario">
+    <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
+      <option value="Simple">Simple</option>
+      <option value="Doble">Doble</option>
+      <option value="Triple">Triple</option>
+    </select>
+    <div class="form-check ">
+      <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
+      <label class="form-check-label" for="salsa">
+        Sin salsa
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
+      <label class="form-check-label" for="cheddar">
+        Extra cheddar
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
+      <label class="form-check-label" for="bacon">
+        Extra bacon
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
+      <label class="form-check-label" for="pepinos">
+        Con pepinos
+      </label>
     </div>
     <div class="mt-3">      
-        <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
-        <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100">
-      </div>
-  </div>
+      <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
+      <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100" id="cerrar">
+      <p id="mostrar-cerrado"></p>
+    </div>
   </form>
-  <div class="container-enlaces-rapidos">
-    <a href="menu.html" class="btn btn-outline-dark botones-menu-carrito">VOLVER AL MENU</a>
-    <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
-</div>
 `;
   seleccionada.append(div);
+  cerrado();
 };
 
 const crearBigMcCard = (id, seleccionada) => {
   let div = document.createElement("div");
   div.className = "container-card-seleccionada";
   div.innerHTML = `
-    <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="BigMc">
-    <div class="card-body">
-      <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
-      <p class="card-text border-bottom pb-3"> ${burgerGeneradas[id].contenido}</p>
-      <form class="container-inputs" id="formulario">
+  <div class="header-card">
+    <div class="container-enlaces-rapidos">
+      <h4 class="card-title">${burgerGeneradas[id].nombre}</h4>
       <div>
-        <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
-          <option value="Simple">Simple</option>
-          <option value="Doble">Doble</option>
-          <option value="Triple">Triple</option>
-        </select>
-          <div class="form-check ">
-            <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
-            <label class="form-check-label" for="salsa">
-              Sin salsa
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
-            <label class="form-check-label" for="cheddar">
-              Extra cheddar
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
-            <label class="form-check-label" for="bacon">
-              Extra bacon
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="Sin pepinos" id="pepinos" >
-            <label class="form-check-label" for="pepinos">
-              Sin pepinos
-            </label>
-          </div>
-      </div>
-      <div class="mt-3">      
-        <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
-        <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100">
+        <a href="menu.html" class="volver">VOLVER</a>
+        <a href="carrito.html" class="carrito">CARRITO</a>
       </div>
     </div>
-    </form>
-    <div class="container-enlaces-rapidos">
-      <a href="menu.html" class="btn btn-outline-dark botones-menu-carrito">VOLVER AL MENU</a>
-      <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
   </div>
+  <form class="container-inputs" id="formulario">
+    <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
+      <option value="Simple">Simple</option>
+      <option value="Doble">Doble</option>
+      <option value="Triple">Triple</option>
+    </select>
+    <div class="form-check ">
+      <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
+      <label class="form-check-label" for="salsa">
+        Sin salsa
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
+      <label class="form-check-label" for="cheddar">
+        Extra cheddar
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
+      <label class="form-check-label" for="bacon">
+        Extra bacon
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Sin pepinos" id="pepinos" >
+      <label class="form-check-label" for="pepinos">
+        Sin pepinos
+      </label>
+    </div>
+    <div class="mt-3">      
+      <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
+      <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100" id="cerrar">
+      <p id="mostrar-cerrado"></p>
+    </div>
+  </form>  
   `;
   seleccionada.append(div);
+  cerrado();
 };
 
 const crearOnionCard = (id, seleccionada) => {
   let div = document.createElement("div");
   div.className = "container-card-seleccionada";
   div.innerHTML = `
-    <img src="${burgerGeneradas[id].url}" class="card-img-top " alt="Fried Onion">
-    <div class="card-body">
-      <h4 class="card-title text-center">${burgerGeneradas[id].nombre}</h4>
-      <p class="card-text border-bottom pb-3"> ${burgerGeneradas[id].contenido}</p>
-      <form class="container-inputs" id="formulario">
+  <div class="header-card">
+    <div class="container-enlaces-rapidos">
+      <h4 class="card-title">${burgerGeneradas[id].nombre}</h4>
       <div>
-        <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
-          <option value="Simple">Simple</option>
-          <option value="Doble">Doble</option>
-          <option value="Triple">Triple</option>
-        </select>
-          <div class="form-check ">
-            <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
-            <label class="form-check-label" for="salsa">
-              Sin salsa
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
-            <label class="form-check-label" for="cheddar">
-              Extra cheddar
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
-            <label class="form-check-label" for="bacon">
-              Extra bacon
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
-            <label class="form-check-label" for="pepinos">
-              Con pepinos
-            </label>
-          </div>
-      </div>
-      <div class="mt-3">      
-          <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
-        <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100">
+        <a href="menu.html" class="volver">VOLVER</a>
+        <a href="carrito.html" class="carrito">CARRITO</a>
       </div>
     </div>
-    </form>
-    <div class="container-enlaces-rapidos">
-      <a href="menu.html" class="btn btn-outline-dark botones-menu-carrito">VOLVER AL MENU</a>
-      <a href="carrito.html" class="btn btn-outline-dark botones-menu-carrito">IR AL CARRITO</a>
   </div>
+  <form class="container-inputs" id="formulario">
+    <select class="form-select mt-3 mb-3" aria-label="Default select example" id="selection">
+      <option value="Simple">Simple</option>
+      <option value="Doble">Doble</option>
+      <option value="Triple">Triple</option>
+    </select>
+    <div class="form-check ">
+      <input class="form-check-input" type="checkbox" value="Sin salsa" id="salsa">
+      <label class="form-check-label" for="salsa">
+        Sin salsa
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra cheddar" id="cheddar" >
+      <label class="form-check-label" for="cheddar">
+        Extra cheddar
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
+      <label class="form-check-label" for="bacon">
+        Extra bacon
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
+      <label class="form-check-label" for="pepinos">
+        Con pepinos
+      </label>
+    </div>
+    <div class="mt-3">      
+      <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
+      <input type="submit" value="Enviar al carrito" class="btn btn-outline-success w-100" id="cerrar">
+      <p id="mostrar-cerrado"></p>
+    </div>
+  </form>
   `;
   seleccionada.append(div);
+  cerrado();
 };
 
 //Funciones para mostrar en el DOM las opciones de la burger que quiere ver el usuario
@@ -344,13 +375,54 @@ const ver = (id) => {
   let precioBurger = document.getElementById("precio");
 
   // Funciones obtener los valores de los inputs seleccionados y modificar el precio del DOM de la card (hamburguesa)
+  const seleccionTamañoBurger = () => {
+    //En caso de que primero seleccione un checkbox
+    if (selection.options[0].selected === true) {
+      rtaMedallones = "Simple";
+      precio += burgerGeneradas[id].precioSimple;
+    }
+    selection.onchange = () => {
+      let simple = selection.options[0].selected;
+      let doble = selection.options[1].selected;
+      let triple = selection.options[2].selected;
+      precio = 0;
+      if (cheddar.checked) {
+        precio += PrecioExtraCheddar;
+      }
+      if (id === 1 || id === 2 || id === 3 || id === 4) {
+        if (bacon.checked) {
+          precio += PrecioExtraBacon;
+        }
+      }
+      if (id === 0 || id === 2 || id === 4) {
+        if (pepino.checked) {
+          precio += PrecioPepinos;
+        }
+      }
+      if (id === 3) {
+        if (pepino.checked) {
+          precio -= PrecioPepinos;
+        }
+      }
+      if (simple === true) {
+        precio += burgerGeneradas[id].precioSimple;
+        rtaMedallones = "Simple";
+        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+      } else if (doble === true) {
+        precio += burgerGeneradas[id].precioDoble;
+        rtaMedallones = "Doble";
+        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+      } else if (triple === true) {
+        precio += burgerGeneradas[id].precioTriple;
+        rtaMedallones = "Triple";
+        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+      }
+    };
+  };
+
   const clickSalsa = () => {
     salsa.onclick = () => {
-      if (salsa.checked) {
-        rtaAderezo = "Sin salsa";
-      } else {
-        rtaAderezo = "Con salsa";
-      }
+      salsa.checked ? (rtaAderezo = "Sin salsa") : (rtaAderezo = "Con salsa");
     };
   };
   const clickCheddar = () => {
@@ -381,175 +453,67 @@ const ver = (id) => {
   };
   const clickPepino = () => {
     pepino.onclick = () => {
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-        rtaPepinos = "Con pepinos";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+      if (burgerGeneradas[id].nombre != "BIG MC") {
+        if (pepino.checked) {
+          precio += PrecioPepinos;
+          rtaPepinos = "Con pepinos";
+          precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+        } else {
+          precio -= PrecioPepinos;
+          rtaPepinos = "";
+          precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+        }
       } else {
-        precio -= PrecioPepinos;
-        rtaPepinos = "";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+        if (pepino.checked) {
+          rtaPepinos = "Sin Pepinos";
+          precio -= PrecioPepinos;
+          precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+        } else {
+          rtaPepinos = "Con pepinos";
+          precio += PrecioPepinos;
+          precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+        }
       }
     };
   };
 
   const inputsCheese = () => {
-    selection.onchange = () => {
-      let simple = selection.options[0].selected;
-      let doble = selection.options[1].selected;
-      let triple = selection.options[2].selected;
-      precio = 0;
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-      }
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-      }
-      if (simple === true) {
-        precio += 700;
-        rtaMedallones = "Simple";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      } else if (doble === true) {
-        precio += 800;
-        rtaMedallones = "Doble";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      } else if (triple === true) {
-        precio += 900;
-        rtaMedallones = "Triple";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      }
-    };
+    seleccionTamañoBurger();
     clickSalsa();
     clickCheddar();
     clickPepino();
   };
 
   const inputsBacon = () => {
-    selection.onchange = () => {
-      let simple = selection.options[0].selected;
-      let doble = selection.options[1].selected;
-      let triple = selection.options[2].selected;
-      precio = 0;
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-      }
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-      }
-      if (simple === true) {
-        precio += 700;
-        rtaMedallones = "Simple";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      } else if (doble === true) {
-        precio += 800;
-        rtaMedallones = "Doble";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      } else if (triple === true) {
-        precio += 900;
-        rtaMedallones = "Triple";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      }
-    };
+    seleccionTamañoBurger();
     clickSalsa();
     clickCheddar();
     clickBacon();
   };
 
-  const inputsRoyaleAndOnion = () => {
-    selection.onchange = () => {
-      let simple = selection.options[0].selected;
-      let doble = selection.options[1].selected;
-      let triple = selection.options[2].selected;
-      precio = 0;
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-      }
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-      }
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-      }
-      if (simple === true) {
-        precio += 700;
-        rtaMedallones = "Simple";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      } else if (doble === true) {
-        precio += 800;
-        rtaMedallones = "Doble";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      } else if (triple === true) {
-        precio += 900;
-        rtaMedallones = "Triple";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      }
-    };
+  const inputsRoyaleAndBigMcAndOnion = () => {
+    seleccionTamañoBurger();
     clickSalsa();
     clickCheddar();
+    if (id === 3) {
+      rtaPepinos = "Con pepinos";
+    }
     clickPepino();
     clickBacon();
   };
 
-  const inputsBigMc = () => {
-    selection.onchange = () => {
-      let simple = selection.options[0].selected;
-      let doble = selection.options[1].selected;
-      let triple = selection.options[2].selected;
-      precio = 0;
-      if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
-      }
-      if (bacon.checked) {
-        precio += PrecioExtraBacon;
-      }
-      if (pepino.checked) {
-        precio += PrecioPepinos;
-      }
-      if (simple === true) {
-        precio += 700;
-        rtaMedallones = "Simple";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      } else if (doble === true) {
-        precio += 800;
-        rtaMedallones = "Doble";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      } else if (triple === true) {
-        precio += 900;
-        rtaMedallones = "Triple";
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      }
-    };
-    clickSalsa();
-    clickCheddar();
-    rtaPepinos = "Con pepinos";
-    pepino.onclick = () => {
-      if (pepino.checked) {
-        rtaPepinos = "Sin Pepinos";
-        precio -= PrecioPepinos;
-        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
-      }
-    };
-    clickBacon();
-  };
-
-  //En caso de que primero seleccione un checkbox
-  if (selection.options[0].selected === true) {
-    rtaMedallones = "Simple";
-    precio += 700;
-  }
   // Logica obtener los valores de los inputs seleccionados y modificar el precio del DOM de la card (hamburguesa)
-  id === 0
-    ? inputsCheese()
-    : id === 1
-    ? inputsBacon()
-    : id === 2 || id === 4
-    ? inputsRoyaleAndOnion()
-    : inputsBigMc();
+  if (id === 0) {
+    inputsCheese();
+  } else if (id === 1) {
+    inputsBacon();
+  } else if (id === 2 || id === 3 || id === 4) {
+    inputsRoyaleAndBigMcAndOnion();
+  }
 
   //Funcion para enviar los valores al constructor y cargar el array de burgers pedidas
   const armarPedido = () => {
-    pedido = new BurgerAñadida(rtaTitle, rtaMedallones, idCompra);
-    pedido.precioMedallones(rtaMedallones);
+    pedido = new BurgerAñadida(rtaTitle, rtaMedallones, idCompra, precio);
     pedido.adereso(rtaAderezo);
     pedido.cheddar(rtaExtraCheddar);
     pedido.pepino(rtaPepinos);
@@ -587,6 +551,7 @@ class BurgerAñadida {
     rtaTitle,
     rtaMedallones,
     idCompra,
+    precio,
     rtaAderezo,
     rtaExtraCheddar,
     rtaPepinos,
@@ -595,55 +560,30 @@ class BurgerAñadida {
     this.hamburguesa = rtaTitle;
     this.medallones = rtaMedallones;
     this.idCompra = idCompra;
+    this.precio = precio;
     this.salsa = rtaAderezo;
     this.extraCheddar = rtaExtraCheddar;
     this.pepinos = rtaPepinos;
     this.extraBacon = rtaExtraBacon;
-    this.precio = 0;
   }
   adereso(rtaAderezo) {
-    if (rtaAderezo == "Sin salsa") {
-      this.salsa = "Sin salsa";
-    } else {
-      this.salsa = "Con salsa";
-    }
+    rtaAderezo == "Sin salsa"
+      ? (this.salsa = "Sin salsa")
+      : (this.salsa = "Con salsa");
   }
   cheddar(rtaExtraCheddar) {
-    if (rtaExtraCheddar == "Extra cheddar") {
-      this.extraCheddar = "Extra Cheddar";
-      this.precio += PrecioExtraCheddar;
-    } else {
-      this.extraCheddar = "Sin Extra Cheddar";
-    }
-  }
-  precioMedallones(rtaMedallones) {
-    if (rtaMedallones === "Simple") {
-      this.precio += 700;
-    } else if (rtaMedallones === "Doble") {
-      this.precio += 800;
-    } else if (rtaMedallones === "Triple") {
-      this.precio += 900;
-    }
+    rtaExtraCheddar == "Extra cheddar"
+      ? (this.extraCheddar = "Extra cheddar")
+      : (this.extraCheddar = "Sin extra cheddar");
   }
   pepino(rtaPepinos) {
-    if (rtaPepinos == "Con pepinos") {
-      this.pepinos = "Con Pepinos";
-      if (rtaTitle != "BIG MC") {
-        this.precio += PrecioPepinos;
-      }
-    } else {
-      this.pepinos = "Sin Pepinos";
-      if (rtaTitle == "BIG MC") {
-        this.precio -= PrecioPepinos;
-      }
-    }
+    rtaPepinos == "Con pepinos"
+      ? (this.pepinos = "Con pepinos")
+      : (this.pepinos = "Sin pepinos");
   }
   bacon(rtaExtraBacon) {
-    if (rtaExtraBacon == "Extra bacon") {
-      this.extraBacon = "Extra Bacon";
-      this.precio += PrecioExtraBacon;
-    } else {
-      this.extraBacon = "Sin Extra Bacon";
-    }
+    rtaExtraBacon == "Extra bacon"
+      ? (this.extraBacon = "Extra bacon")
+      : (this.extraBacon = "Sin extra bacon");
   }
 }

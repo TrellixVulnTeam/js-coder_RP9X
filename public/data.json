@@ -2,35 +2,45 @@
   {
     "nombre": "CHEESEBURGER",
     "contenido": "Medallon de carne de 120grs, cheddar y salsa thousand island. Incluye papas.",
-    "precioSimple": 700,
+    "precioSimple": 690,
+    "precioDoble": 850 ,
+    "precioTriple": 1050,
     "url": "/multimedia/imagenes/cheese.png",
     "id": 0
   },
   {
     "nombre":"BACON CHEESEBURGER",
     "contenido":"Medallon de carne de 120grs, cheddar, panceta ahumada y salsa thousand island. Incluye papas.",
-    "precioSimple":700,
+    "precioSimple":740,
+    "precioDoble":  910,
+    "precioTriple": 1110,
     "url":"/multimedia/imagenes/bacon-menu.png",
     "id":1
   },
   {
     "nombre":"ROYALE",
     "contenido":"Medallon de carne de 120grs, cheddar, cebolla brunoise y salsa 1/4 de libra. Incluye papas.",
-    "precioSimple":700,
+    "precioSimple":720,
+    "precioDoble":  880,
+    "precioTriple": 1080,
     "url":"/multimedia/imagenes/royale.png",
     "id":2
   },
   {
     "nombre":"BIG MC",
     "contenido":"Medallon de carne de 120grs, cheddar, lechuga, cebolla picada, pepinos y salsa big mc. Incluye papas.",
-    "precioSimple":700,
+    "precioSimple":720,
+    "precioDoble":  910,
+    "precioTriple": 1110,
     "url":"/multimedia/imagenes/bg mc.png",
     "id":3
   },
   {
     "nombre":"FRIED ONION",
     "contenido":"Medallon de carne de 100grs smasheado junto a la cebolla. Incluye papas.",
-    "precioSimple":700,
+    "precioSimple":740,
+    "precioDoble":  920,
+    "precioTriple": 1120,
     "url":"/multimedia/imagenes/onion .png",
     "id":4
   }

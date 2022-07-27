@@ -27,8 +27,6 @@
       }
 }
 
-
-
 .container-hamburguesas-menu{
     @include flexing (flex,center);
     flex-wrap: wrap;
@@ -36,10 +34,9 @@
 
     .container-card{
         @extend %estructura-cards;
-        margin: 5px;
+        margin: 10px;
         width: 18em;
         transition: 1s;
-
         &:hover{
             transform: translateY(8px);
         }
@@ -47,7 +44,8 @@
         .card-body{
             .titulo-card{
                 font-size: 1.3rem;
-                
+                padding-bottom: 5px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.333);
             }
         }
       }
@@ -56,37 +54,100 @@
 .container-hamburguesas-seleccionadas {
     display: flex;
     justify-content: center;
-    margin-bottom: 2em;
+    margin-bottom: $margen-entre-section;
     .container-card-seleccionada {
       width: 25em;
-      
       @extend %estructura-cards;
+      padding: 1em;
+        .header-card{
+          display: flex;
+          flex-direction: column;
+          .container-enlaces-rapidos {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+            margin-bottom: 1em;
+            padding-bottom: 1em;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.146);
+            .card-title{
+              font-size: 1.5rem;
+              @media screen and (max-width: 648px) {
+                font-size: 1.2rem;
+              }
+            }
+            div {
+              display: flex;
+              flex-direction: row;
+              .volver{
+                color:rgba(0, 0, 0, 0.271);
+                text-decoration: none;
+                &:hover{
+                  color:rgb(0, 0, 0);
+                  border-bottom: 1px solid black;
+                }
+                &:active{
+                  border-bottom: 2px solid black;
+                }
+                @media screen and (max-width: 648px) {
+                  font-size: 0.8rem;
+                }
+                @media screen and (max-width: 320px) {
+                  margin: 0px;
+                }
+              }
+              .carrito {
+                margin-left: 1em;
+                color:rgb(0, 0, 0);
+                text-decoration: none;
+                &:hover{
+                  border-bottom: 1px solid black;
+                }
+                &:active{
+                  border-bottom: 2px solid black;
+                }
+                @media screen and (max-width: 648px) {
+                  font-size: 0.8rem;
+                }
+                @media screen and (max-width: 320px) {
+                  margin: 0px;
+                  margin-top: 2px;
+                }
+              }
+              @media screen and (max-width: 320px) {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+              }
+            }
+            .div-title-largo{
+              @media screen and (max-width: 648px) {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+              }
+            }
+          }
+        }
+
       .container-inputs {
         display: flex;
         flex-direction: column;
+        div {
+          #mostrar-cerrado {
+            color: red;
+          }
+        }
       }
-  
-      @media screen and (max-width: 648px) {
-        width: 20em;
-      }
-      @media screen and (max-width: 320px) {
-        width: 15em;
-      }
+    @media screen and (max-width: 648px) {
+      width: 20em;
     }
-  }
-  
-  .container-enlaces-rapidos {
-    @include flexing(flex, center);
-    .botones-menu-carrito {
-      margin: 20px;
-      @media screen and(max-width:468px) {
-        font-size: 12px;
-      }
-      @media screen and(max-width:320px) {
-        font-size: 10px;
-      }
+    @media screen and (max-width: 320px) {
+      width: 15em;
     }
-  }
+    }
+  } 
 
 .confirmacion{
   position: fixed;

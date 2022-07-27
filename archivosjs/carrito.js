@@ -1,17 +1,20 @@
 //Variables donde obtengo el array de las compras y el total de burger que hay en el carrito
 let compras = JSON.parse(localStorage.getItem("compras")) || [];
-let IDCompra = localStorage.getItem("idCompra") || 0;
+let IDCompra = Number(localStorage.getItem("idCompra")) || 0;
 
 //Muestro en el DOM la cantidad de productos que hay en el carrito
 let cantidadCarrito = document.getElementById("cantidad-carrito");
 cantidadCarrito.innerText = `${IDCompra}`;
 //Variable que hace referencia al boton enviar pedido
 let botonEnviarPedido = document.getElementById("btn-enviar-pedido");
+//Variable que hace referencia a la seccion de resumen fixed
+let resumenPedido = document.getElementById("resumen-pedido");
 //Funcion que modifico el DOM en caso de que el carrito este vacio
 carritoVacio = () => {
   burgerCarrito.innerHTML = `<p>Tu carrito esta vacio</p>`;
   botonEnviarPedido.remove();
   containerBurgerElegidas.append(burgerCarrito);
+  resumenPedido.remove();
 };
 
 //Variables que hacen referencia a las etiquetas donde tengo que mostrar el las burgers elegidas
@@ -24,30 +27,65 @@ if (compras.length === 0) {
 } else {
   //Recorre los elementos del array y muestra los productos seleccionados en el documento
   for (const elemento of compras) {
-    burgerCarrito = document.createElement("div");
-    burgerCarrito.className = "resumen-burger-a-comprar";
-    burgerCarrito.id = `${elemento.idCompra}`;
-    burgerCarrito.innerHTML = `
-    <div class="container-burgerTamaño-botonDelete">
-    <p class="burger-tamaño">
-    ${elemento.hamburguesa}: ${elemento.medallones}
-    </p>
-    <button id="delete" onclick="eliminar(${elemento.idCompra})">X</button>
-    </div>
-    <p class="resumen-contenido">                     
-    ${elemento.salsa} - ${elemento.extraCheddar} - ${elemento.extraBacon} - ${elemento.pepinos}. 
-    <label class="precio-burger">Valor $${elemento.precio}</label>
-    </p>`;
-    containerBurgerElegidas.append(burgerCarrito);
+    if (elemento.hamburguesa == "CHEESEBURGER") {
+      burgerCarrito = document.createElement("div");
+      burgerCarrito.className = "resumen-burger-a-comprar";
+      burgerCarrito.id = `${elemento.idCompra}`;
+      burgerCarrito.innerHTML = `
+      <div class="container-burgerTamaño-botonDelete">
+        <p class="burger-tamaño">
+          ${elemento.hamburguesa}: ${elemento.medallones}
+        </p>
+        <button id="delete" onclick="eliminar(${elemento.idCompra})">X</button>
+      </div>
+      <p class="resumen-contenido">                     
+        ${elemento.salsa} - ${elemento.extraCheddar} - ${elemento.pepinos}. 
+        <label class="precio-burger">Valor $${elemento.precio}</label>
+      </p>`;
+      containerBurgerElegidas.append(burgerCarrito);
+    } else if (elemento.hamburguesa == "BACON CHEESEBURGER") {
+      burgerCarrito = document.createElement("div");
+      burgerCarrito.className = "resumen-burger-a-comprar";
+      burgerCarrito.id = `${elemento.idCompra}`;
+      burgerCarrito.innerHTML = `
+      <div class="container-burgerTamaño-botonDelete">
+        <p class="burger-tamaño">
+          ${elemento.hamburguesa}: ${elemento.medallones}
+        </p>
+        <button id="delete" onclick="eliminar(${elemento.idCompra})">X</button>
+      </div>
+      <p class="resumen-contenido">                     
+        ${elemento.salsa} - ${elemento.extraCheddar} - ${elemento.extraBacon}. 
+        <label class="precio-burger">Valor $${elemento.precio}</label>
+      </p>`;
+      containerBurgerElegidas.append(burgerCarrito);
+    } else if (
+      elemento.hamburguesa == "ROYALE" ||
+      elemento.hamburguesa == "FRIED ONION" ||
+      elemento.hamburguesa == "BIG MC"
+    ) {
+      burgerCarrito = document.createElement("div");
+      burgerCarrito.className = "resumen-burger-a-comprar";
+      burgerCarrito.id = `${elemento.idCompra}`;
+      burgerCarrito.innerHTML = `
+      <div class="container-burgerTamaño-botonDelete">
+        <p class="burger-tamaño">
+          ${elemento.hamburguesa}: ${elemento.medallones}
+        </p>
+        <button id="delete" onclick="eliminar(${elemento.idCompra})">X</button>
+      </div>
+      <p class="resumen-contenido">                     
+        ${elemento.salsa} - ${elemento.extraCheddar} - ${elemento.extraBacon} - ${elemento.pepinos}. 
+        <label class="precio-burger">Valor $${elemento.precio}</label>
+      </p>`;
+      containerBurgerElegidas.append(burgerCarrito);
+    }
   }
 }
 
 //Variables que hacen referencia a las etiquetas donde tengo que mostrar el valor total
-let containerValorFinal = document.getElementById("valor-final");
-let valorFinal = document.createElement("p");
-let resumenPedido = document.getElementById("resumen-pedido");
-let valorFinalResumen = document.createElement("p");
-valorFinalResumen.className = "valor-total";
+let valorFinal = document.getElementById("valor-final");
+let valorFinalResumen = document.getElementById("valor-total");
 
 //Funcion calcular VALOR TOTAL
 let valorTotal;
@@ -57,9 +95,9 @@ const calcularValorTotal = () => {
     0
   );
   valorFinal.innerText = "VALOR TOTAL $" + valorTotal;
-  containerValorFinal.append(valorFinal);
-  valorFinalResumen.innerText = "VALOR TOTAL $" + valorTotal;
-  resumenPedido.append(valorFinalResumen);
+  if (valorTotal != 0) {
+    valorFinalResumen.innerText = "VALOR TOTAL $" + valorTotal;
+  }
 };
 
 //Calculo el valor total cuando entro a la seccion carrito
@@ -90,8 +128,9 @@ let direccion = document.createElement("div");
 enviar.onclick = () => {
   direccion.id = "direccion";
   direccion.className = "container-label-input";
-  direccion.innerHTML = `<label for="enviar">Direccion</label>
-                         <input type="text" id="enviar"  name="direccion" required>`;
+  direccion.innerHTML = `
+    <label for="enviar">Direccion</label
+    <input type="text" id="enviar"  name="direccion" required>`;
   obtenerPedido.append(direccion);
 };
 
@@ -118,11 +157,9 @@ formulario.onsubmit = (e) => {
     direccionPedido = miFormulario.children[2].children[3].children[1].value;
     localStorage.setItem("DireccionPedido", direccionPedido);
   }
-  if (miFormulario.children[3].children[1].children[0].checked === true) {
-    metodoPago = "Efectivo";
-  } else {
-    metodoPago = "Mercado Pago";
-  }
+  miFormulario.children[3].children[1].children[0].checked === true
+    ? (metodoPago = "Efectivo")
+    : (metodoPago = "Mercado Pago");
   localStorage.setItem("MetodoPago", metodoPago);
   localStorage.setItem("ValorPedido", valorTotal);
   Toastify({
@@ -132,6 +169,5 @@ formulario.onsubmit = (e) => {
   }).showToast();
   setTimeout(() => {
     location.href = "./resumenPedido.html";
-    //window.open("https://wa.me/+542241584323?text=Nombre del pedido:");
   }, 2000);
 };

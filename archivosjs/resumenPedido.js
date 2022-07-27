@@ -24,7 +24,7 @@ datosPedido.innerHTML = `
   <p>${direccionPedido}</p>
   <h3>Metodo de pago:</h3>
   <p>${metodoPago}</p>
-  <h3>Valor:</h3>
+  <h3>Valor total:</h3>
   <p>$${valorPedido}</p>
 `;
 containerDatosPedido.append(datosPedido);
