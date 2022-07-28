@@ -547,24 +547,15 @@ const ver = (id) => {
 
 //Constructor para guardar la burger y los agregados que quiere el usuario
 class BurgerAñadida {
-  constructor(
-    rtaTitle,
-    rtaMedallones,
-    idCompra,
-    precio,
-    rtaAderezo,
-    rtaExtraCheddar,
-    rtaPepinos,
-    rtaExtraBacon
-  ) {
+  constructor(rtaTitle, rtaMedallones, idCompra, precio) {
     this.hamburguesa = rtaTitle;
     this.medallones = rtaMedallones;
     this.idCompra = idCompra;
     this.precio = precio;
-    this.salsa = rtaAderezo;
-    this.extraCheddar = rtaExtraCheddar;
-    this.pepinos = rtaPepinos;
-    this.extraBacon = rtaExtraBacon;
+    this.salsa = String;
+    this.extraCheddar = String;
+    this.pepinos = String;
+    this.extraBacon = String;
   }
   adereso(rtaAderezo) {
     rtaAderezo == "Sin salsa"
