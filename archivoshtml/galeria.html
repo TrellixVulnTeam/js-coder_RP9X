@@ -33,8 +33,8 @@
     <title>Galeria | BAGAS BURGER</title>
 </head>
 <body>
-<!-- Header -->
-    <header>
+<!-- Header desktop-->
+    <header class="header-desktop">
         <div class="contenedor-logo">
             <a href="index.html">
               <img src="../multimedia/imagenes/LogoB.png" alt="Logo bagas burger" class="logo-nav-footer">
@@ -60,21 +60,24 @@
                 <li>
                   <a href="carrito.html" class="btn position-relative">
                     <i class="fa-solid fa-cart-shopping" ></i>
-                    <span class="m-2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cantidad-carrito">
+                    <span class="m-2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cantidad-carritoD">
                     </span>
                   </a>
                 </li>
             </ul>
         </nav>
     </header>
-<!-- Fin header -->
+<!-- Fin header desktop-->
 
+<!-- Header mobile -->
+<header class="header-mobile">
+    <div class="container-logo">
+      <img src="../multimedia/imagenes/LogoB.png" alt="Logo bagas burger" class="logo-header">
+    </div>
+    <h2 class="titulo-secciones" id="titulo-seccion">GALERIA</h2>
+  </header>
+  <!-- Fin header mobile -->
 
-<!-- Titulo seccion -->
-    <section class="container-titulo-galeria">
-        <h2 class="titulos-secciones-galeria">GALERIA</h2>
-    </section>
-<!--Fin titulo seccion -->
 
 
 <!-- Videos -->
@@ -84,8 +87,47 @@
         <video src="../multimedia/videos/video-onion.mp4" controls title="Onion"></video>
         <video src="../multimedia/videos/video-royale.mp4" controls title="Royale"></video>
     </section>
-
 <!-- Fin videos-->
+
+<!-- Nav mobile -->
+<nav class="nav-mobile">
+    <ul>
+        <li class="contenedor-logo">
+            <a href="../index.html" class="links">
+                <i class="fa-solid fa-house"></i>
+                <span>INICIO</span>
+            </a>
+        </li>
+        <li class="contenedor-logo" >
+            <a href="menu.html" class="links">
+                <i class="fa-solid fa-burger"></i>
+                <span>MENU</span>
+            </a>
+        </li>
+        <li class="contenedor-logo">
+            <a href="./contacto.html" class="links">
+                <i class="fa-solid fa-location-dot" id="contacto"></i>
+                <span> CONTACTO</span>
+            </a>
+        </li>                  
+        <li class="contenedor-logo" id="ubicacion-navbar">
+            <a href="galeria.html" class="links">
+                <i class="fa-solid fa-images" id="galeria"></i>
+                <span>GALERIA</span>
+            </a>
+        </li>
+        <li class="contenedor-logo" >
+            <a href="./carrito.html" class="links">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger cant-carrito" id="cantidad-carritoM">     
+                    
+                </span>
+                <span>CARRITO</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Fin nav mobile-->
 
 <!-- PIE DE PAGINA -->
     <footer id="footer">

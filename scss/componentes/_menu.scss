@@ -4,34 +4,10 @@
 
 
 
-.container-titulo-menu{
-    @include flexing(flex,center);
-    margin-top: $margen-entre-section;
-    margin-bottom:$margen-entre-section;
-
-    .titulos-secciones-menu{
-        width: 60%;
-        text-align: center;
-        @include titulos-subtitulos(2rem,("Neutra-Bold", sans-serif),800);     
-        opacity: 0.8;
-        padding-bottom: 2em;
-        border-bottom: 2px solid black;
-        
-        @media screen and (max-width:468px) {
-            font-size: 20px;
-        }
-        @media screen and (max-width:320px) {
-            font-size: 15px;
-            
-        }
-      }
-}
-
 .container-hamburguesas-menu{
     @include flexing (flex,center);
     flex-wrap: wrap;
     margin-bottom: $margen-entre-section;
-
     .container-card{
         @extend %estructura-cards;
         margin: 10px;
@@ -48,6 +24,9 @@
                 border-bottom: 1px solid rgba(0, 0, 0, 0.333);
             }
         }
+      }
+      @media screen and (max-width:648px) {
+        margin-bottom: 0px;
       }
 }
 
@@ -135,6 +114,36 @@
         display: flex;
         flex-direction: column;
         div {
+          margin-top: 10px;
+          .disabled-add-dec{
+            display: none;
+          }
+          .add-dec {
+            margin-left: 5px;   
+            font-size: 0.8rem;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.1);
+            -webkit-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.1);
+            -moz-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.1);
+            &:active{
+              box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.1);
+              -webkit-box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.1);
+              -moz-box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.1);
+          }
+            @media screen and (max-width: 320px) {
+              font-size: 0.6rem;
+            }
+          }
+          .text-add-dec{
+            margin-left: 3px;
+            margin-right: 3px;
+            font-size: 0.9rem;
+            @media screen and (max-width: 320px) {
+              font-size: 0.6rem;
+            }
+          }
           #mostrar-cerrado {
             color: red;
           }
@@ -154,8 +163,18 @@
   text-align: center;
   z-index: 200;
   width: 100%;
-  padding: 20px;
-  background-color: rgb(0, 136, 0);
+  padding: 10px;
+  background-color: white;
   color: black;
-  @include titulos-subtitulos(1.2rem,("Neutra-Bold", sans-serif),800);  
+  box-shadow: 0px 0px 6px 6px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0px 0px 6px 6px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 6px 6px rgba(0,0,0,0.1);
+  @include titulos-subtitulos(1rem,("Neutra-Bold", sans-serif),800);
+  @media screen and (max-width: 468px) {
+   font-size: 0.8rem;
+  }
+  @media screen and (max-width: 364px) {
+   font-size: 0.8rem;
+   font-weight: 500;
+  }
 }

@@ -1,0 +1,34 @@
+@import "../base/variables";
+@import "../base/extend";
+@import "../base/mixin";
+
+.header-mobile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top:$margen-entre-section;
+    margin-bottom:$margen-entre-section;
+    .container-logo{
+        display: none;
+        margin-bottom: 2em;
+        @media screen and (max-width:648px) {
+          display: flex;
+        }
+    }
+    .titulo-secciones{
+        width: 60%;
+        text-align: center;
+        @include titulos-subtitulos(2rem,("Neutra-Bold", sans-serif),800);     
+        opacity: 0.8;
+        padding-bottom: 2em;
+        border-bottom: 2px solid black;
+        
+        @media screen and (max-width:468px) {
+            font-size: 20px;
+        }
+        @media screen and (max-width:320px) {
+            font-size: 15px;
+            
+        }
+      }
+  }

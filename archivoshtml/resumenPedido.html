@@ -4,18 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
     <title>Document</title>
 </head>
 <body>
     <h1  id="titulo-detalle-pedido">Detalles de tu pedido enviado</h1>
-    <section>
-        <div id="datos-pedido">
-        </div>
-        <div id="resumen-hamburguesas-pedido">
-            <h3>Hamburguesas pedidas:</h3>
-        </div>
-        <a href="../archivoshtml/menu.html" id="hacer-nuevo-pedido">Hacer un nuevo pedido</a>
-    </section>
+    <div class="contenedor-ticket">
+    <img
+     src="../multimedia/imagenes/LogoB.png"
+    alt="Logotipo">
+    <p>BAGAS BURGER</p>
+    <div class="contenedor-f-h">
+        <p id="titulo-nombre-pedido">Nombre del pedido:<span id="nombre-pedido"></span></p>
+        <p id="fecha-hora"></p>
+    </div>
+        <table class="tabla">
+            <thead class="header-tabla">
+                <tr class="fila-header">
+                    <th class="cabeceras">HAMBURGUESA</th>
+                    <th class="cabeceras">CONTENIDO</th>
+                    <th class="cabeceras">VALOR</th>
+                </tr>
+            </thead>
+            <tbody class="body-tabla" id="datos-pedido">
+            </tbody>
+        </table>
+        <p id="valor-final"></p>
+        <p class="centrado">¡GRACIAS POR SU COMPRA!</p>
+    </div>
+    <div class="contenedor-botones" id="contenedor-botones">
+        <button class="oculto-impresion" id="imprimir">Imprimir</button>
+        <a href="../archivoshtml/menu.html" id="nuevo-pedido">Hacer nuevo pedido</a>
+    </div>
+
     <script src="../archivosjs/resumenPedido.js"></script>
 </body>
 </html>

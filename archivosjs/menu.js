@@ -69,14 +69,18 @@ let rtaAderezo;
 let rtaExtraCheddar;
 let rtaPepinos;
 let rtaExtraBacon;
+let cantExCh = 0;
+let cantExB = 0;
 const PrecioExtraCheddar = 100;
 const PrecioExtraBacon = 100;
 const PrecioPepinos = 50;
 //Array de los productos que se añaden al carrito
 let carrito = JSON.parse(localStorage.getItem("compras")) || [];
 //Muestro en el DOM la cantidad de productos que hay en el carrito
-let cantidadCarrito = document.getElementById("cantidad-carrito");
-cantidadCarrito.innerText = `${idCompra}`;
+let cantidadCarritoDesktop = document.getElementById("cantidad-carritoD");
+let cantidadCarritoMobile = document.getElementById("cantidad-carritoM");
+cantidadCarritoDesktop.innerText = `${idCompra}`;
+cantidadCarritoMobile.innerText = `${idCompra}`;
 
 //Funcion para no mostrar el boton enviar al carrito en caso de que este cerrado
 const DateTime = luxon.DateTime;
@@ -121,6 +125,8 @@ const crearCheeseCard = (id, seleccionada) => {
       <label class="form-check-label" for="cheddar">
         Extra cheddar
       </label>
+      <button type="button" class="disabled-add-dec" id="dec-cheddar">-1</button> <label class="text-add-dec" id="extra-cheddar">x ${cantExCh}</label>
+      <button type="button" class="disabled-add-dec" id="add-cheddar">+1</button>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
@@ -170,12 +176,16 @@ const crearBaconCard = (id, seleccionada) => {
       <label class="form-check-label" for="cheddar">
         Extra cheddar
       </label>
+      <button type="button" class="disabled-add-dec dec" id="dec-cheddar">-1</button> <label class="text-add-dec" id="extra-cheddar">x ${cantExCh}</label>
+      <button type="button" class="disabled-add-dec" id="add-cheddar">+1</button>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
       <label class="form-check-label" for="bacon">
         Extra bacon
       </label>
+      <button type="button" class="disabled-add-dec" id="dec-bacon">-1</button> <label class="text-add-dec" id="extra-bacon">x ${cantExB}</label>
+      <button type="button" class="disabled-add-dec" id="add-bacon">+1</button>
     </div>
     <div class="mt-3">      
       <p id="precio"> Valor $${burgerGeneradas[id].precioSimple}</p>
@@ -218,12 +228,16 @@ const crearRoyaleCard = (id, seleccionada) => {
       <label class="form-check-label" for="cheddar">
         Extra cheddar
       </label>
+      <button type="button" class="disabled-add-dec" id="dec-cheddar">-1</button> <label class="text-add-dec" id="extra-cheddar">x ${cantExCh}</label>
+      <button type="button" class="disabled-add-dec" id="add-cheddar">+1</button>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
       <label class="form-check-label" for="bacon">
         Extra bacon
       </label>
+      <button type="button" class="disabled-add-dec" id="dec-bacon">-1</button> <label class="text-add-dec" id="extra-bacon">x ${cantExB}</label>
+      <button type="button" class="disabled-add-dec" id="add-bacon">+1</button>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
@@ -272,12 +286,16 @@ const crearBigMcCard = (id, seleccionada) => {
       <label class="form-check-label" for="cheddar">
         Extra cheddar
       </label>
+      <button type="button" class="disabled-add-dec" id="dec-cheddar">-1</button> <label class="text-add-dec" id="extra-cheddar">x ${cantExCh}</label>
+      <button type="button" class="disabled-add-dec" id="add-cheddar">+1</button>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
       <label class="form-check-label" for="bacon">
         Extra bacon
       </label>
+      <button type="button" class="disabled-add-dec" id="dec-bacon">-1</button> <label class="text-add-dec" id="extra-bacon">x ${cantExB}</label>
+      <button type="button" class="disabled-add-dec" id="add-bacon">+1</button>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Sin pepinos" id="pepinos" >
@@ -326,12 +344,16 @@ const crearOnionCard = (id, seleccionada) => {
       <label class="form-check-label" for="cheddar">
         Extra cheddar
       </label>
+      <button type="button" class="disabled-add-dec" id="dec-cheddar">-1</button> <label class="text-add-dec" id="extra-cheddar">x ${cantExCh}</label>
+      <button type="button" class="disabled-add-dec" id="add-cheddar">+1</button>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Extra bacon" id="bacon" >
       <label class="form-check-label" for="bacon">
         Extra bacon
       </label>
+      <button type="button" class="disabled-add-dec" id="dec-bacon">-1</button> <label class="text-add-dec" id="extra-bacon">x ${cantExB}</label>
+      <button type="button" class="disabled-add-dec" id="add-bacon">+1</button>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Con pepinos" id="pepinos" >
@@ -356,15 +378,17 @@ const ver = (id) => {
   let tituloSeccion = document.getElementById("titulo-seccion");
   tituloSeccion.innerText = "HAMBURGUESA SELECCIONADA";
   let seleccionada = document.getElementById("cardSeleccionada");
-  id === 0
-    ? crearCheeseCard(id, seleccionada)
-    : id === 1
-    ? crearBaconCard(id, seleccionada)
-    : id === 2
-    ? crearRoyaleCard(id, seleccionada)
-    : id === 3
-    ? crearBigMcCard(id, seleccionada)
-    : crearOnionCard(id, seleccionada);
+  if (id === 0) {
+    crearCheeseCard(id, seleccionada);
+  } else if (id === 1) {
+    crearBaconCard(id, seleccionada);
+  } else if (id === 2) {
+    crearRoyaleCard(id, seleccionada);
+  } else if (id === 3) {
+    crearBigMcCard(id, seleccionada);
+  } else if (id === 4) {
+    crearOnionCard(id, seleccionada);
+  }
 
   //Variables que van a referenciar los inputs checkbox
   let selection = document.getElementById("selection");
@@ -373,6 +397,50 @@ const ver = (id) => {
   let bacon = document.getElementById("bacon");
   let pepino = document.getElementById("pepinos");
   let precioBurger = document.getElementById("precio");
+  // Variables que van a referenciar los botones de cantidad de extras
+  const mostrarCantExCh = document.getElementById("extra-cheddar");
+  let decCheddar = document.getElementById("dec-cheddar");
+  let addCheddar = document.getElementById("add-cheddar");
+  const mostrarCantExB = document.getElementById("extra-bacon");
+  let decBacon = document.getElementById("dec-bacon");
+  let addBacon = document.getElementById("add-bacon");
+  // Funciones obtener las cantidades de los extras
+  const cantidadExtraCheddar = () => {
+    addCheddar.onclick = () => {
+      if (cantExCh > 0 && cantExCh < 2) {
+        cantExCh++;
+        mostrarCantExCh.innerText = `x ${cantExCh}`;
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+      }
+    };
+    decCheddar.onclick = () => {
+      if (cantExCh >= 2) {
+        cantExCh--;
+        mostrarCantExCh.innerText = `x ${cantExCh}`;
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+      }
+    };
+  };
+  const cantidadExtraBacon = () => {
+    addBacon.onclick = () => {
+      if (cantExB > 0 && cantExB < 2) {
+        cantExB++;
+        mostrarCantExB.innerText = `x ${cantExB}`;
+        precio += PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+      }
+    };
+    decBacon.onclick = () => {
+      if (cantExB >= 2) {
+        cantExB--;
+        mostrarCantExB.innerText = `x ${cantExB}`;
+        precio -= PrecioExtraCheddar;
+        precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
+      }
+    };
+  };
 
   // Funciones obtener los valores de los inputs seleccionados y modificar el precio del DOM de la card (hamburguesa)
   const seleccionTamañoBurger = () => {
@@ -387,7 +455,7 @@ const ver = (id) => {
       let triple = selection.options[2].selected;
       precio = 0;
       if (cheddar.checked) {
-        precio += PrecioExtraCheddar;
+        precio += PrecioExtraCheddar * cantExCh;
       }
       if (id === 1 || id === 2 || id === 3 || id === 4) {
         if (bacon.checked) {
@@ -428,12 +496,20 @@ const ver = (id) => {
   const clickCheddar = () => {
     cheddar.onclick = () => {
       if (cheddar.checked) {
+        cantExCh++;
+        addCheddar.className = "add-dec";
+        decCheddar.className = "add-dec";
+        mostrarCantExCh.innerText = `x ${cantExCh}`;
         rtaExtraCheddar = "Extra cheddar";
         precio += PrecioExtraCheddar;
         precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
       } else {
         rtaExtraCheddar = "";
-        precio -= PrecioExtraCheddar;
+        precio -= PrecioExtraCheddar * cantExCh;
+        cantExCh = 0;
+        mostrarCantExCh.innerText = `x ${cantExCh}`;
+        addCheddar.className = "disabled-add-dec";
+        decCheddar.className = "disabled-add-dec";
         precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
       }
     };
@@ -441,12 +517,20 @@ const ver = (id) => {
   const clickBacon = () => {
     bacon.onclick = () => {
       if (bacon.checked) {
+        cantExB++;
+        addBacon.className = "add-dec";
+        decBacon.className = "add-dec";
+        mostrarCantExB.innerText = `x ${cantExB}`;
         rtaExtraBacon = "Extra bacon";
         precio += PrecioExtraBacon;
         precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
       } else {
         rtaExtraBacon = "";
         precio -= PrecioExtraBacon;
+        cantExB = 0;
+        mostrarCantExB.innerText = `x ${cantExB}`;
+        addBacon.className = "disabled-add-dec";
+        decBacon.className = "disabled-add-dec";
         precioBurger.innerHTML = `<p id="precio"> Valor $${precio}</p>`;
       }
     };
@@ -482,6 +566,7 @@ const ver = (id) => {
     clickSalsa();
     clickCheddar();
     clickPepino();
+    cantidadExtraCheddar();
   };
 
   const inputsBacon = () => {
@@ -489,6 +574,8 @@ const ver = (id) => {
     clickSalsa();
     clickCheddar();
     clickBacon();
+    cantidadExtraCheddar();
+    cantidadExtraBacon();
   };
 
   const inputsRoyaleAndBigMcAndOnion = () => {
@@ -500,6 +587,8 @@ const ver = (id) => {
     }
     clickPepino();
     clickBacon();
+    cantidadExtraCheddar();
+    cantidadExtraBacon();
   };
 
   // Logica obtener los valores de los inputs seleccionados y modificar el precio del DOM de la card (hamburguesa)
@@ -510,14 +599,13 @@ const ver = (id) => {
   } else if (id === 2 || id === 3 || id === 4) {
     inputsRoyaleAndBigMcAndOnion();
   }
-
   //Funcion para enviar los valores al constructor y cargar el array de burgers pedidas
   const armarPedido = () => {
     pedido = new BurgerAñadida(rtaTitle, rtaMedallones, idCompra, precio);
     pedido.adereso(rtaAderezo);
-    pedido.cheddar(rtaExtraCheddar);
+    pedido.cheddar(rtaExtraCheddar, cantExCh);
+    pedido.bacon(rtaExtraBacon, cantExB);
     pedido.pepino(rtaPepinos);
-    pedido.bacon(rtaExtraBacon);
     carrito.push(pedido);
     localStorage.setItem("compras", JSON.stringify(carrito));
   };
@@ -525,7 +613,7 @@ const ver = (id) => {
   const mostrarCartel = () => {
     Toastify({
       text: "TU HAMBURGUESA FUE AGREGADA AL CARRITO",
-      duration: 3000,
+      duration: 2000,
       className: "confirmacion",
     }).showToast();
   };
@@ -536,8 +624,8 @@ const ver = (id) => {
     idCompra++;
     localStorage.setItem("idCompra", idCompra);
     //Muestro en el DOM la cantidad de productos que hay en el carrito
-    cantidadCarrito = document.getElementById("cantidad-carrito");
-    cantidadCarrito.innerText = `${idCompra}`;
+    cantidadCarritoDesktop.innerText = `${idCompra}`;
+    cantidadCarritoMobile.innerText = `${idCompra}`;
     rtaTitle = burgerGeneradas[id].nombre;
 
     armarPedido();
@@ -562,19 +650,19 @@ class BurgerAñadida {
       ? (this.salsa = "Sin salsa")
       : (this.salsa = "Con salsa");
   }
-  cheddar(rtaExtraCheddar) {
+  cheddar(rtaExtraCheddar, cantExCh) {
     rtaExtraCheddar == "Extra cheddar"
-      ? (this.extraCheddar = "Extra cheddar")
+      ? (this.extraCheddar = `Extra cheddar (x${cantExCh})`)
       : (this.extraCheddar = "Sin extra cheddar");
+  }
+  bacon(rtaExtraBacon, cantExB) {
+    rtaExtraBacon == "Extra bacon"
+      ? (this.extraBacon = `Extra bacon (x${cantExB})`)
+      : (this.extraBacon = "Sin extra bacon");
   }
   pepino(rtaPepinos) {
     rtaPepinos == "Con pepinos"
       ? (this.pepinos = "Con pepinos")
       : (this.pepinos = "Sin pepinos");
-  }
-  bacon(rtaExtraBacon) {
-    rtaExtraBacon == "Extra bacon"
-      ? (this.extraBacon = "Extra bacon")
-      : (this.extraBacon = "Sin extra bacon");
   }
 }

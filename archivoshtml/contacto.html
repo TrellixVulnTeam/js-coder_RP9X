@@ -30,8 +30,8 @@
     <title>Contacto | BAGAS BURGER</title>
 </head>
 <body>
-<!-- Header -->
-    <header>
+<!-- Header desktop-->
+    <header class="header-desktop">
         <div class="contenedor-logo">
             <a href="index.html">
                 <img src="../multimedia/imagenes/LogoB.png" alt="Logo bagas burger" class="logo-nav-footer">
@@ -57,14 +57,23 @@
                 <li>
                     <a href="carrito.html" class="btn position-relative">
                     <i class="fa-solid fa-cart-shopping" ></i>
-                    <span class="m-2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cantidad-carrito">
+                    <span class="m-2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cantidad-carritoD">
                     </span>
                     </a>
                 </li>
             </ul>
         </nav>
     </header>
-  <!-- Fin header -->
+  <!-- Fin header desktop -->
+
+  <!-- Header mobile -->
+<header class="header-mobile">
+    <div class="container-logo">
+      <img src="../multimedia/imagenes/LogoB.png" alt="Logo bagas burger" class="logo-header">
+    </div>
+    <h2 class="titulo-secciones">CONTACTO</h2>
+  </header>
+  <!-- Fin header mobile -->
 
   <!-- Mapa -->
     <section class="section-primera">
@@ -77,11 +86,50 @@
 <!-- Contacto-->
     <section  class="section-segunda">
         <h3 class="titulos-section-segunda">TELEFONO</h3>
-        <p class="parrafos">2241584323</p>
+        <p class="parrafos">xxxxxxx</p>
         <h3 id="titulo-largo" class="titulos-section-segunda">SEGUINOS PARA MAS NOVEDADES EN</h3>
-        <p class="parrafos">instagram.com/bagas_burger/</p>
+        <p class="parrafos">instagram xxxxxx/</p>
     </section>
 <!-- Fin contacto-->
+
+<!-- Nav mobile -->
+<nav class="nav-mobile">
+    <ul>
+        <li class="contenedor-logo">
+            <a href="../index.html" class="links">
+                <i class="fa-solid fa-house"></i>
+                <span>INICIO</span>
+            </a>
+        </li>
+        <li class="contenedor-logo" >
+            <a href="menu.html" class="links">
+                <i class="fa-solid fa-burger"></i>
+                <span>MENU</span>
+            </a>
+        </li>
+        <li class="contenedor-logo" id="ubicacion-navbar">
+            <a href="./contacto.html" class="links">
+                <i class="fa-solid fa-location-dot" id="contacto"></i>
+                <span> CONTACTO</span>
+            </a>
+        </li>                  
+        <li class="contenedor-logo">
+            <a href="./galeria.html" class="links">
+                <i class="fa-solid fa-images" id="galeria"></i>
+                <span>GALERIA</span>
+            </a>
+        </li>
+        <li class="contenedor-logo" >
+            <a href="./carrito.html" class="links">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger cant-carrito" id="cantidad-carritoM">     
+                </span>
+                <span>CARRITO</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Fin nav mobile-->
 
 <!-- PIE DE PAGINA -->
     <footer id="footer">

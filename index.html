@@ -34,8 +34,8 @@
     <title>Inicio | BAGAS BURGER</title>
 </head>
 <body>
-<!-- Header -->
-    <header>
+<!-- Header desktop -->
+    <header class="header-desktop">
         <div class="contenedor-logo">
             <a href="index.html">
                 <img src="./multimedia/imagenes/LogoB.png" alt="Logo bagas burger" class="logo-nav-footer">
@@ -61,14 +61,24 @@
                 <li>
                     <a href="./archivoshtml/carrito.html" class="btn position-relative">
                     <i class="fa-solid fa-cart-shopping" ></i>
-                    <span class="m-2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cantidad-carrito">          
+                    <span class="m-2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cantidad-carritoD">          
                     </span>
                     </a>
                 </li>
             </ul>
         </nav>
     </header>
-<!-- Fin header-->
+<!-- Fin header desktop-->
+
+<!-- Header mobile -->
+<header class="header-mobile">
+    <div class="container-logo">
+      <img src="../multimedia/imagenes/LogoB.png" alt="Logo bagas burger" class="logo-header">
+    </div>
+    <h1 class="titulo-secciones">BAGAS BURGUER</h1>
+  </header>
+  <!-- Fin header mobile -->
+
     <section id="section-abierto-cerrado">
         <p id="abierto-cerrado"></p>
     </section>
@@ -95,7 +105,46 @@
         <h2 class="titulos-index">DONDE ENCONTRARNOS</h2>
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3244.9377069619622!2d-58.0143979851595!3d-35.57992931730677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x959812aa22d7503b%3A0xf413e6008c23c539!2sAlsina%20189%2C%20Chascom%C3%BAs%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1646926761204!5m2!1ses-419!2sar"  class="mapa" title="Ubicacion en el mapa"></iframe>
     </section>
-        
+
+    <!-- Nav mobile -->
+  <nav class="nav-mobile">
+    <ul>
+        <li class="contenedor-logo" id="ubicacion-navbar">
+            <a href="index.html" class="links">
+                <i class="fa-solid fa-house"></i>
+                <span>INICIO</span>
+            </a>
+        </li>
+        <li class="contenedor-logo">
+            <a href="./archivoshtml/menu.html" class="links">
+                <i class="fa-solid fa-burger"></i>
+                <span>MENU</span>
+            </a>
+        </li>
+        <li class="contenedor-logo">
+            <a href="./archivoshtml/contacto.html" class="links">
+                <i class="fa-solid fa-location-dot" id="contacto"></i>
+                <span> CONTACTO</span>
+            </a>
+        </li>                  
+        <li class="contenedor-logo">
+            <a href="./archivoshtml/galeria.html" class="links">
+                <i class="fa-solid fa-images" id="galeria"></i>
+                <span>GALERIA</span>
+            </a>
+        </li>
+        <li class="contenedor-logo" >
+            <a href="./archivoshtml/carrito.html" class="links">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger cant-carrito" id="cantidad-carritoM">     
+                    
+                </span>
+                <span>CARRITO</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Fin nav mobile-->
 
 <!-- PIE DE PAGINA -->
     <footer id="footer">

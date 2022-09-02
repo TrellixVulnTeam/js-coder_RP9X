@@ -31,8 +31,8 @@
     <title>Carrito | BAGAS BURGER</title>
 </head>
 <body>
-<!-- Header -->
-    <header>
+<!-- Header desktop-->
+    <header class="header-desktop">
         <div class="contenedor-logo">
             <a href="index.html">
             <img src="../multimedia/imagenes/LogoB.png" alt="Logo bagas burger" class="logo-nav-footer">
@@ -58,14 +58,23 @@
                 <li>
                     <a href="carrito.html" class="btn position-relative" id="ubi-section">
                     <i class="fa-solid fa-cart-shopping" ></i>
-                    <span class="m-2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cantidad-carrito">
+                    <span class="m-2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cantidad-carritoD">
                     </span>
                     </a>
                 </li>
             </ul>
         </nav>
     </header>
-<!-- Fin header -->
+<!-- Fin header desktop-->
+
+<!-- Header mobile -->
+<header class="header-mobile">
+    <div class="container-logo">
+      <img src="../multimedia/imagenes/LogoB.png" alt="Logo bagas burger" class="logo-header">
+    </div>
+    <h2 class="titulo-secciones" id="titulo-seccion">CARRITO</h2>
+  </header>
+  <!-- Fin header mobile -->
 
     <section class="section-general">
     <!-- Resumen hamburgesas para pedir -->
@@ -112,14 +121,46 @@
         </div>
     <!-- Fin de formulario para enviar pedido -->
     </section>
+    
+    <!-- Nav mobile -->
+  <nav class="nav-mobile">
+    <ul>
+        <li class="contenedor-logo">
+            <a href="../index.html" class="links">
+                <i class="fa-solid fa-house"></i>
+                <span>INICIO</span>
+            </a>
+        </li>
+        <li class="contenedor-logo" >
+            <a href="menu.html" class="links">
+                <i class="fa-solid fa-burger"></i>
+                <span>MENU</span>
+            </a>
+        </li>
+        <li class="contenedor-logo">
+            <a href="./contacto.html" class="links">
+                <i class="fa-solid fa-location-dot" id="contacto"></i>
+                <span> CONTACTO</span>
+            </a>
+        </li>                  
+        <li class="contenedor-logo">
+            <a href="./galeria.html" class="links">
+                <i class="fa-solid fa-images" id="galeria"></i>
+                <span>GALERIA</span>
+            </a>
+        </li>
+        <li class="contenedor-logo" id="ubicacion-navbar">
+            <a href="./carrito.html" class="links">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger cant-carrito" id="cantidad-carritoM">     
+                </span>
+                <span>CARRITO</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Fin nav mobile-->
         
-        
-    <!-- Barra fixed para finalizar compra-->
-    <section class="resumen-pedido" id="resumen-pedido">
-        <p class="valor-total" id="valor-total"></p>
-        <a href="#finalizar-compra" class="btn btn-outline-success valortotal">FINALIZAR COMPRA</a>
-    </section>
-    <!-- Fin barra fixed para finalizar compra-->
 
     <!-- PIE DE PAGINA -->
     <footer id="footer">

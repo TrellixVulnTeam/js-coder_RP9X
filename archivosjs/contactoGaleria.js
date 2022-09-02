@@ -1,4 +1,6 @@
 const cantidadCarrito = Number(localStorage.getItem("idCompra")) || 0;
-const mostrarCantidad = document.getElementById("cantidad-carrito");
+const mostrarCantidadDesktop = document.getElementById("cantidad-carritoD");
+const mostrarCantidadMobile = document.getElementById("cantidad-carritoM");
 
-mostrarCantidad.innerText = `${cantidadCarrito}`;
+mostrarCantidadDesktop.innerText = `${cantidadCarrito}`;
+mostrarCantidadMobile.innerText = `${cantidadCarrito}`;
